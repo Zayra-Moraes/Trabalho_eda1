@@ -4,7 +4,10 @@
 
 int main()
 {
-printf("teste");
+    // teste 
+    menuPrincipal();
+//teste dois gdfch
 
+    
     return 0;
 }
