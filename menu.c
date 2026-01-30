@@ -1,7 +1,36 @@
 #include "menu.h"
 #include "funcoes.h"
 #include <stdio.h>
+#include <windows.h>
 
+void cria_cliente_teste(Cliente *le)
+{
+  Cliente *c1 = malloc(sizeof(Cliente));
+
+  if (c1 == NULL)
+  {
+    return ;
+  }
+
+  c1->nome = malloc(100 * sizeof(char));
+  c1->email = malloc(100 * sizeof(char));
+  if (c1->nome == NULL || c1->email == NULL)
+  { // senao alocar certo limpa
+    free(c1->nome);
+    free(c1->email);
+    free(c1);
+    return ;
+  }
+
+  c1->nome = "Zayra gostosa"; // acesso por ponteiro
+  c1->cpf = 789456;
+  c1->email = "email.teste";
+  strcpy(c1->telefone, "telefone");
+  strcpy(c1->nascimento , "12122005");
+  c1->prox = NULL;
+  Cliente * ultimo =acha_ultimo_leCliente(le);
+  insere_cliente_le(c1,ultimo);
+}
 // menu nem comecei
 int menuCompra()
 {
@@ -149,9 +178,28 @@ int menuCliente(Cliente *le)
       break;
     case 3:
       printf("buscar cliente pelo cpf...\n\n");
+      printf("Por favor digite o cpf do cliente que deseja pesquisar:  ");
+      int cpf = 0;
+      scanf("%d", &cpf);
+      Sleep(1.5);
+      Cliente *c1 = buscar_cliente(le, cpf);
+      if (c1)
+      {
+        printf("Cliente encontrado!\n");
+        printf("--------------------------------\n");
+        printf("Nome: %s\n", c1->nome);
+        printf("CPF: %d\n", c1->cpf);
+        printf("Email: %s\n", c1->email);
+        printf("Telefone: %s\n", c1->telefone);
+        printf("nascimento: %s\n", c1->nascimento);
+        printf("--------------------------------\n");
+        break;
+      }
+      printf("Cliente nao encontrado!");
       break;
     case 4:
       printf("editar dados do cliente...\n\n");
+
       break;
     case 5:
       printf("remover cliente\n\n");
@@ -172,6 +220,8 @@ int menuPrincipal()
   Cliente *le_cliente = cria_le_cliente();
   Produto *le_produto = cria_le_produto();
   Carrinho *le_carrinho = cria_le_carrinho();
+  cria_cliente_teste(le_cliente);
+
   int entrada = -1;
 
   while (entrada != 0)

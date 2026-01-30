@@ -34,19 +34,23 @@ typedef struct cliente
 Cliente * cria_le_cliente();
 Produto * cria_le_produto();
 Carrinho * cria_le_carrinho();
-void insere_produto_le(Produto x, Produto *le);
+Cliente *acha_ultimo_leCliente(Cliente *le);
+
+void insere_produto_le(Produto *inserido, Produto *anterior);
 void insere_carrinho_le(Carrinho x, Carrinho *le);
 void insere_cliente_le(Cliente *inserido, Cliente *anterior);
+
 void free_cliente(Cliente *c);
 Cliente  * cria_cliente();
 void cadastrar_cliente(Cliente *le);
 void listar_clientes(Cliente *lista);
-void buscar_cliente(Cliente *lista, int cpf);
+Cliente *buscar_cliente(Cliente *lista, int cpf);
 void editar_cliente(Cliente *lista, int cpf);
 void remover_cliente(Cliente **lista, int cpf);
 
-void cadastrar_produto(Produto **lista);
-void listar_produtos(Produto *lista);
+void cadastrar_produto(Produto *le);
+void listar_produtos(Produto *le);
+void acha_ultimo_leProduto(Produto *le);
 void buscar_produtos(Produto *lista, int codigo);
 void editar_produtos(Produto *lista, int codigo);
 void remover_produtos(Produto **lista, int codigo);

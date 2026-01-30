@@ -16,7 +16,6 @@ Cliente *cria_le_cliente()
     le->prox = NULL;
     return le;
 }
-
 Produto *cria_le_produto()
 {
     Produto *le;
@@ -59,8 +58,11 @@ Cliente *cria_cliente()
 
     printf("Nome:");
     scanf("%[^\n]", c1->nome); // acesso por ponteiro
-    printf("CPF:");
-    scanf("%d", &c1->cpf);
+    do{
+        printf("CPF:");
+        scanf("%d", &c1->cpf);
+    }while(0);
+    
     printf("Email:");
     scanf("%s", c1->email);
     printf("TELEFONE:");
@@ -120,10 +122,14 @@ void listar_clientes(Cliente *le)
     }
 }
 
-void buscar_cliente(Cliente *lista, int cpf)
+Cliente * buscar_cliente(Cliente *lista, int cpf)
 {
-    printf("teste");
+    if(lista==NULL) return NULL;
+    if(lista->cpf==cpf) return lista;
+    return buscar_cliente(lista->prox, cpf);
 }
+
+
 
 void editar_cliente(Cliente *lista, int cpf)
 {
@@ -135,15 +141,86 @@ void remover_cliente(Cliente **lista, int cpf)
     printf("teste");
 }
 
+int verifica_cpf(int cpf){
+    int digitos=snprintf(NULL,0,"%d",cpf);
+    if(digitos>11){
+        printf("CPF inválido, por favor inserir novamente: ");
+        return 0;//erro
+    }
+    return 1;//dentro do padrao
+}
+
 // PRODUTO
-void cadastrar_produto(Produto **lista)
+
+Produto *acha_ultimo_leProduto(Produto *le)
 {
-    printf("teste");
+    Produto *p = le;
+    while(p->prox != NULL){
+        p = p-> prox;
+    }
+    return p;
+}
+
+Produto *cria_produto()
+{
+    Produto *p1 = malloc(sizeof(Produto));
+    if (p1 == NULL) return NULL;
+
+
+    printf("\n--- Cadastro de Produto ---\n");
+    printf("Código do produto: ");
+    scanf("%d", &p1-> codigo);
+    printf("Nome do Produto: ");
+    scanf("%[^\n]", p1->nome);
+    printf("Preço: ");
+    scanf("%f", &p1->preco);
+    printf("Quantidade em estoque: ");
+    scanf("%d", &p1->quantidade);
+    p1 -> prox= NULL;
+
+    return p1;
+}
+
+void insere_produto_le(Produto *inserido, Cliente *anterior)
+
+{
+    if(inserido == NULL || anterior == NULL) return;
+    inserido-> prox = anterior -> prox;
+    anterior-> prox = inserido; 
+}
+
+
+void cadastrar_produto(Produto *le)
+{
+    Produto *novo = cria_produto();
+    if (novo == NULL) {
+        printf("Erro ao cadastrar novo produto");
+        return;
+    }
+    Produto *ultimo = acha_ultimo_leProduto(le);
+    insere_produto_le(novo, ultimo);
+    printf("Produto [%s] cadastrado com sucesso!\n", novo->nome);
+
+}
+
+void free_produto(Produto *p)
+{
+
+    if (p == NULL) return;
+    free(p->nome);
+    free(p->quantidade);
+    free(p);
 }
 
 void listar_produtos(Produto *lista)
 {
-    printf("teste");
+
+    Produto *p;
+    printf("\n--- Lista de Produtos ---\n");
+    for (p = le->prox; p != NULL; p = p->prox){
+        printf("Código: %d   | Nome: %-20s\n", p->codigo, p->nome);
+        printf("Preço: R$ %.2f   | Quantidade: %d\n",p->preco, p->quantidade);
+    }
 }
 
 void buscar_produtos(Produto *lista, int codigo)
