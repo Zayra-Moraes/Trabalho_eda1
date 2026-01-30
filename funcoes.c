@@ -45,6 +45,18 @@ Cliente *cria_cliente()
         return NULL;
     }
 
+    c1->nome= malloc(100* sizeof(char));
+    c1->email= malloc(100* sizeof(char));
+    if (c1->nome == NULL || c1->email == NULL)
+    {// senao alocar certo limpa
+        free(c1->nome);
+        free(c1->email);
+        free(c1);
+        return NULL;
+    }
+    
+
+
     printf("Nome:");
     scanf("%[^\n]", c1->nome); // acesso por ponteiro
     printf("CPF:");
@@ -81,6 +93,17 @@ void cadastrar_cliente(Cliente *le)
 
     insere_cliente_le(c1, ultimo);
     printf("cliente cadastrado\n");
+}
+
+void free_cliente(Cliente *c){
+    if (c == NULL)
+    {
+        return ;
+    }
+    free(c->nome);
+    free(c->email);
+    free(c);
+    
 }
 
 void listar_clientes(Cliente *le)
