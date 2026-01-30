@@ -27,7 +27,7 @@ Produto *cria_le_produto()
 Cliente *acha_ultimo_leCliente(Cliente *le)
 {
     Cliente *p = le;
-    while (p->prox != NULL && p != NULL)
+    while (p->prox != NULL)
     {
         p = p->prox;
     }
@@ -35,42 +35,52 @@ Cliente *acha_ultimo_leCliente(Cliente *le)
 }
 // CLIENTE
 
-Cliente cria_cliente()
-
+Cliente *cria_cliente()
+// crio uma celula cliente com o prox apontado pra null
+// aloco a memoria e armazeno o valor nos campos
 {
-    Cliente c1;
+    Cliente *c1 = malloc(sizeof(Cliente));
+    if (c1 == NULL)
+    {
+        return NULL;
+    }
+
     printf("Nome:");
-    scanf("%[^\n]", c1.nome);
+    scanf("%[^\n]", c1->nome); // acesso por ponteiro
     printf("CPF:");
-    scanf("%d", &c1.cpf);
+    scanf("%d", &c1->cpf);
     printf("Email:");
-    scanf("%s", c1.email);
+    scanf("%s", c1->email);
     printf("TELEFONE:");
-    scanf("%s", c1.telefone);
+    scanf("%s", c1->telefone);
     printf("NASCIMENTO:");
-    scanf("%s", c1.nascimento);
-    c1.prox = NULL;
+    scanf("%s", c1->nascimento);
+    c1->prox = NULL;
 
     return c1;
 }
 
-void insere_cliente_le(Cliente inserido, Cliente *anterior)
+void insere_cliente_le(Cliente *inserido, Cliente *anterior)
+// jogo de ponteiros
 {
-    Cliente *novo;
-    novo = malloc(sizeof(Cliente));
-    if (novo == NULL)
+    if (inserido == NULL || anterior == NULL)
         return;
-    *novo = inserido;
-    novo->prox = anterior->prox;
-    anterior->prox = novo;
+    inserido->prox = anterior->prox;
+    anterior->prox = inserido;
 }
 void cadastrar_cliente(Cliente *le)
 // adiciona cria cliente e adiciona cliente na lista;
 {
-    Cliente c1 = cria_cliente();
+    Cliente * c1 = cria_cliente();
+    if (c1 == NULL)
+    {
+        printf("erro ao criar novo cliente\n");
+        return;
+    }
     Cliente *ultimo = acha_ultimo_leCliente(le);
+
     insere_cliente_le(c1, ultimo);
-    printf("cliente cadastrado ");
+    printf("cliente cadastrado\n");
 }
 
 void listar_clientes(Cliente *le)
