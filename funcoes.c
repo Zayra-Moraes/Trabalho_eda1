@@ -24,7 +24,15 @@ Produto *cria_le_produto()
     le->prox = NULL;
     return le;
 }
-
+Cliente *acha_ultimo_leCliente(Cliente *le)
+{
+    Cliente *p = le;
+    while (p->prox != NULL && p != NULL)
+    {
+        p = p->prox;
+    }
+    return p;
+}
 // CLIENTE
 
 Cliente cria_cliente()
@@ -60,13 +68,23 @@ void cadastrar_cliente(Cliente *le)
 // adiciona cria cliente e adiciona cliente na lista;
 {
     Cliente c1 = cria_cliente();
-    insere_cliente_le(c1, le);
+    Cliente *ultimo = acha_ultimo_leCliente(le);
+    insere_cliente_le(c1, ultimo);
     printf("cliente cadastrado ");
 }
 
-void listar_clientes(Cliente *lista)
+void listar_clientes(Cliente *le)
 {
-    printf("teste");
+    Cliente *p;
+    for (p = le->prox; p != NULL; p = p->prox)
+    {
+        printf("/////////////////\n");
+        printf("Nome:%s\n", p->nome);
+        printf("Email:%s\n", p->email);
+        printf("CPF:%d\n", p->cpf);
+        printf("Numero:%s\n", p->telefone);
+        printf("Data de nascimento:%s\n", p->nascimento);
+    }
 }
 
 void buscar_cliente(Cliente *lista, int cpf)

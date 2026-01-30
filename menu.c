@@ -145,7 +145,7 @@ int menuCliente(Cliente *le)
 
     case 2:
       printf("listar todos os clientes...\n\n");
-      break;
+      listar_clientes(le);
     case 3:
       printf("buscar cliente pelo cpf...\n\n");
       break;

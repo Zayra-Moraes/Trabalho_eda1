@@ -33,6 +33,8 @@ typedef struct cliente
 Cliente * cria_le_cliente();
 Produto * cria_le_produto();
 Carrinho * cria_le_carrinho();
+void insere_produto_le(Produto x, Produto *le);
+void insere_carrinho_le(Carrinho x, Carrinho *le);
 void insere_cliente_le(Cliente x, Cliente *le);
 Cliente  cria_cliente();
 void cadastrar_cliente(Cliente *le);
