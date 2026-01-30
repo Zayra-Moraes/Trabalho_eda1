@@ -67,7 +67,10 @@ int menuCompra()
       printf("buscar cliente por cpf...\n\n");
       break;
     case 4:
-      printf("editar dados do cliente...\n\n");
+      printf("Editar dados do cliente...\n\n");
+      long int cpf_digitado;
+      if (verifica_cpf(cpf_digitado))
+        editar_cliente(le, cpf_digitado);
       break;
     case 5:
       printf("remover cliente\n\n");
@@ -188,7 +191,7 @@ int menuCliente(Cliente *le)
         printf("Cliente encontrado!\n");
         printf("--------------------------------\n");
         printf("Nome: %s\n", c1->nome);
-        printf("CPF: %d\n", c1->cpf);
+        printf("CPF: %ld\n", c1->cpf);
         printf("Email: %s\n", c1->email);
         printf("Telefone: %s\n", c1->telefone);
         printf("nascimento: %s\n", c1->nascimento);
