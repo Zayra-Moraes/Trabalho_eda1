@@ -1,26 +1,32 @@
 #include "menu.h"
-
+#include "funcoes.h"
 #include <stdio.h>
 
-//menu nem comecei
-int menuCompra(){
-    int entrada = -1;
+// menu nem comecei
+int menuCompra()
+{
+  int entrada = -1;
 
-    while (entrada != 0) {
+  while (entrada != 0)
+  {
 
     printf("--------------Menu de Compras--------------\n");
-    //chamar o listar produtos
-    printf("0 - Para voltar\n"); 
-    printf("\nPor favor digite um número:\n");
+    // chamar o listar produtos
+    printf("0 - Para voltar\n");
+    printf("\nPor favor digite um numero:\n");
     printf("--------------------------------------------\n");
-    if (scanf("%d", &entrada) != 1) {
+    if (scanf("%d", &entrada) != 1)
+    {
       printf("entrada invalida\n");
-      while (getchar() != '\n');
+      while (getchar() != '\n')
+        ;
       continue;
     }
-    while (getchar() != '\n');
+    while (getchar() != '\n')
+      ;
 
-    switch (entrada) {
+    switch (entrada)
+    {
     case 1:
       printf("cadastrar cliente...\n\n");
       break;
@@ -45,31 +51,37 @@ int menuCompra(){
       break;
     }
   }
-    return 0;
+  return 0;
 }
 
-int menuProdutos(){
-    int entrada = -1;
+int menuProdutos()
+{
+  int entrada = -1;
 
-    while (entrada != 0) {
+  while (entrada != 0)
+  {
 
     printf("--------------Menu de Produtos--------------\n");
-    printf("1 - Cadastrar produto\n"); 
-    printf("2 - Listar todos os produtos\n"); 
-    printf("3 - Buscar produto pelo codigo\n"); 
-    printf("4 - Editar dados de um produto\n"); 
-    printf("5 - Remover produto\n"); 
-    printf("0 - Para voltar\n"); 
-    printf("\nPor favor digite um número:\n");
+    printf("1 - Cadastrar produto\n");
+    printf("2 - Listar todos os produtos\n");
+    printf("3 - Buscar produto pelo codigo\n");
+    printf("4 - Editar dados de um produto\n");
+    printf("5 - Remover produto\n");
+    printf("0 - Para voltar\n");
+    printf("\nPor favor digite um numero:\n");
     printf("--------------------------------------------\n");
-    if (scanf("%d", &entrada) != 1) {
+    if (scanf("%d", &entrada) != 1)
+    {
       printf("entrada invalida\n");
-      while (getchar() != '\n');
+      while (getchar() != '\n')
+        ;
       continue;
     }
-    while (getchar() != '\n');
+    while (getchar() != '\n')
+      ;
 
-    switch (entrada) {
+    switch (entrada)
+    {
     case 1:
       printf("cadastrar produto...\n\n");
       break;
@@ -94,40 +106,46 @@ int menuProdutos(){
       break;
     }
   }
-    return 0;
+  return 0;
 }
 
-int menuCliente(){
-    int entrada = -1;
+int menuCliente(Cliente *le)
+{
+  int entrada = -1;
 
-    while (entrada != 0) {
+  while (entrada != 0)
+  {
 
     printf("--------------Menu de Clientes--------------\n");
-    printf("1 - Cadastrar Cliente\n"); 
-    printf("2 - Listar todos os Clientes\n"); 
-    printf("3 - Buscar clientes pelo CPF\n"); 
-    printf("4 - Editar dados de um cliente\n"); 
-    printf("5 - Remover Cliente\n"); 
-    printf("0 - Para voltar\n"); 
+    printf("1 - Cadastrar Cliente\n");
+    printf("2 - Listar todos os Clientes\n");
+    printf("3 - Buscar clientes pelo CPF\n");
+    printf("4 - Editar dados de um cliente\n");
+    printf("5 - Remover Cliente\n");
+    printf("0 - Para voltar\n");
     printf("--------------------------------------------\n");
-    printf("\nPor favor digite um número:\n");
+    printf("\nPor favor digite um numero:\n");
 
-    if (scanf("%d", &entrada) != 1) {
+    if (scanf("%d", &entrada) != 1)
+    { // se ele nao conseguir ler um int o scanf vai retornar 0
       printf("entrada invalida\n");
-      while (getchar() != '\n');
+      while (getchar() != '\n')
+        ;
       continue;
     }
-    while (getchar() != '\n');
+    while (getchar() != '\n')
+      ;
 
-    switch (entrada) {
+    switch (entrada)
+    {
     case 1:
       printf("cadastrar cliente...\n\n");
-      cadastrar_cliente();
+      cadastrar_cliente(le);
       break;
 
     case 2:
       printf("listar todos os clientes...\n\n");
-      break;
+      listar_clientes(le);
     case 3:
       printf("buscar cliente pelo cpf...\n\n");
       break;
@@ -145,36 +163,43 @@ int menuCliente(){
       break;
     }
   }
-    return 0;
+  return 0;
 }
 
-int menuPrincipal() {
-    // concertei, o problema é que ele printa tao rapido e reprinta a 
-    // primeira parte tao rapido que nao da pra ver, mas esta funcional.
+int menuPrincipal()
+{
+  Cliente *le_cliente = cria_le_cliente();
+  Produto *le_produto = cria_le_produto();
+  Carrinho *le_carrinho = cria_le_carrinho();
   int entrada = -1;
 
-  while (entrada != 0) {
+  while (entrada != 0)
+  {
 
-    printf("\n              BEM VINDO Á obelisco           \n");
+    printf("\n              BEM VINDO A obelisco           \n");
     printf("----------------Menu Principal----------------\n");
-    printf("1 - Gerenciamento de Clientes\n"); 
-    printf("2 - Gerenciamento de Produtos\n"); 
-    printf("3 - Modo Compra\n"); 
-    printf("0 - Para sair\n"); 
+    printf("1 - Gerenciamento de Clientes\n");
+    printf("2 - Gerenciamento de Produtos\n");
+    printf("3 - Modo Compra\n");
+    printf("0 - Para sair\n");
     printf("------------------------------------------------\n");
-    printf("\nPor favor digite um número:\n");
+    printf("\nPor favor digite um numero:\n");
 
-    if (scanf("%d", &entrada) != 1) {
+    if (scanf("%d", &entrada) != 1)
+    {
       printf("entrada invalida\n");
-      while (getchar() != '\n');
+      while (getchar() != '\n')
+        ;
       continue;
     }
-    while (getchar() != '\n');
+    while (getchar() != '\n')
+      ;
 
-    switch (entrada) {
+    switch (entrada)
+    {
     case 1:
       printf("Entrando no Menu de clientes...\n\n");
-      menuCliente();
+      menuCliente(le_cliente);
       break;
 
     case 2:
@@ -195,5 +220,3 @@ int menuPrincipal() {
 
   return 0;
 }
-
-
