@@ -1,7 +1,9 @@
 #include "menu.h"
 #include "funcoes.h"
 #include <stdio.h>
-#include <windows.h>
+#include <stdlib.h>
+#include <string.h>
+// #include <windows.h>
 
 void cria_cliente_teste(Cliente *le)
 {
@@ -23,7 +25,7 @@ void cria_cliente_teste(Cliente *le)
   }
 
   c1->nome = "Zayra gostosa"; // acesso por ponteiro
-  c1->cpf = 789456;
+  strcpy(c1->cpf, "12345");
   c1->email = "email.teste";
   strcpy(c1->telefone, "telefone");
   strcpy(c1->nascimento , "12122005");
@@ -68,9 +70,6 @@ int menuCompra()
       break;
     case 4:
       printf("Editar dados do cliente...\n\n");
-      long int cpf_digitado;
-      if (verifica_cpf(cpf_digitado))
-        editar_cliente(le, cpf_digitado);
       break;
     case 5:
       printf("remover cliente\n\n");
@@ -182,16 +181,20 @@ int menuCliente(Cliente *le)
     case 3:
       printf("buscar cliente pelo cpf...\n\n");
       printf("Por favor digite o cpf do cliente que deseja pesquisar:  ");
-      int cpf = 0;
-      scanf("%d", &cpf);
-      Sleep(1.5);
+      char cpf[12];
+      scanf("%s", cpf);
+      // Sleep(1.5);
       Cliente *c1 = buscar_cliente(le, cpf);
       if (c1)
       {
         printf("Cliente encontrado!\n");
         printf("--------------------------------\n");
         printf("Nome: %s\n", c1->nome);
+<<<<<<< HEAD
         printf("CPF: %ld\n", c1->cpf);
+=======
+        printf("CPF: %s\n", c1->cpf);
+>>>>>>> 41d3f812118808f6bb8ccf80ac45e9f0785ab7d4
         printf("Email: %s\n", c1->email);
         printf("Telefone: %s\n", c1->telefone);
         printf("nascimento: %s\n", c1->nascimento);
@@ -202,7 +205,9 @@ int menuCliente(Cliente *le)
       break;
     case 4:
       printf("editar dados do cliente...\n\n");
-
+      char cpf_digitado[12];
+      if (verifica_cpf(cpf_digitado))
+        editar_cliente(le, cpf_digitado);
       break;
     case 5:
       printf("remover cliente\n\n");

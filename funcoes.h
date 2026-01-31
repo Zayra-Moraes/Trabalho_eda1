@@ -23,7 +23,7 @@ typedef struct carrinho
 typedef struct cliente
 {
     // fez um cliente como uma celula de uma le
-    long int cpf;
+    char cpf[12];
     char *nome;
     char *email;
     char telefone[15];
@@ -44,10 +44,10 @@ void free_cliente(Cliente *c);
 Cliente  * cria_cliente();
 void cadastrar_cliente(Cliente *le);
 void listar_clientes(Cliente *lista);
-Cliente *buscar_cliente(Cliente *lista, int cpf);
-void editar_cliente(Cliente *lista, int cpf);
+Cliente *buscar_cliente(Cliente *lista, char *cpf);
+void editar_cliente(Cliente *lista, char *cpf);
 void remover_cliente(Cliente **lista, int cpf);
-int verifica_cpf(long int cpf);
+int verifica_cpf(char *cpf);
 
 void cadastrar_produto(Produto *le);
 void listar_produtos(Produto *le);

@@ -58,16 +58,16 @@ Cliente *cria_cliente()
     printf("Nome:");
     scanf("%[^\n]", c1->nome); // acesso por ponteiro
     int n_cpf = 1;
-    long int cpf = 0;
+    char cpf[14];
     do
     {
         printf("CPF:");
 
-        scanf("%ld", &cpf);
+        scanf("%s", cpf);
         n_cpf = verifica_cpf(cpf);
 
     } while (n_cpf == 0);
-    c1->cpf = cpf;
+    strcpy(c1->cpf,cpf);
     printf("Email:");
     scanf("%s", c1->email);
     printf("TELEFONE:");
@@ -121,22 +121,22 @@ void listar_clientes(Cliente *le)
         printf("/////////////////\n");
         printf("Nome:%s\n", p->nome);
         printf("Email:%s\n", p->email);
-        printf("CPF:%ld\n", p->cpf);
+        printf("CPF:%s\n", p->cpf);
         printf("Numero:%s\n", p->telefone);
         printf("Data de nascimento:%s\n", p->nascimento);
     }
 }
 
-Cliente *buscar_cliente(Cliente *lista, long int cpf)
+Cliente *buscar_cliente(Cliente *lista, char *cpf)
 {
     if (lista == NULL)
         return NULL;
-    if (lista->cpf == cpf)
+    if(strcmp(lista->cpf,cpf)==0)
         return lista;
     return buscar_cliente(lista->prox, cpf);
 }
 
-void editar_cliente(Cliente *le, long int cpf)
+void editar_cliente(Cliente *le, char *cpf)
 {
 
     Cliente *p = buscar_cliente(le->prox, cpf);
@@ -190,19 +190,17 @@ void remover_cliente(Cliente **lista, int cpf)
     printf("teste");
 }
 
-int verifica_cpf(long int cpf)
+int verifica_cpf(char *cpf)
 {
-    char str_cpf[13];
-    snprintf(str_cpf, sizeof(str_cpf), "%ld", cpf);
-    printf("%s\n", str_cpf);
-    int n = (strlen(str_cpf));
+    printf("%s\n", cpf);
+    int n = (strlen(cpf));
     printf("%d\n", n);
-    // if (digitos > 11)
-    // {
-    //     printf("CPF inválido, por favor inserir novamente: ");
-    //     return 0; // erro
-    // }
-    // return 1; // dentro do padrao
+    if (n > 11)
+    {
+        printf("CPF inválido, por favor inserir novamente: ");
+        return 0; // erro
+    }
+    return 1; // dentro do padrao
 }
 
 // PRODUTO
