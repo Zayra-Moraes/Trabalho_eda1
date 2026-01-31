@@ -4,35 +4,30 @@
 #include <string.h>
 
 // LISTAS
-Carrinho *cria_le_carrinho()
-{
-    Carrinho *le;
-    le = malloc(sizeof(Carrinho));
-    le->prox = NULL;
-    return le;
+Carrinho *cria_le_carrinho() {
+  Carrinho *le;
+  le = malloc(sizeof(Carrinho));
+  le->prox = NULL;
+  return le;
 }
-Cliente *cria_le_cliente()
-{
-    Cliente *le;
-    le = malloc(sizeof(Cliente));
-    le->prox = NULL;
-    return le;
+Cliente *cria_le_cliente() {
+  Cliente *le;
+  le = malloc(sizeof(Cliente));
+  le->prox = NULL;
+  return le;
 }
-Produto *cria_le_produto()
-{
-    Produto *le;
-    le = malloc(sizeof(Produto));
-    le->prox = NULL;
-    return le;
+Produto *cria_le_produto() {
+  Produto *le;
+  le = malloc(sizeof(Produto));
+  le->prox = NULL;
+  return le;
 }
-Cliente *acha_ultimo_leCliente(Cliente *le)
-{
-    Cliente *p = le;
-    while (p->prox != NULL)
-    {
-        p = p->prox;
-    }
-    return p;
+Cliente *acha_ultimo_leCliente(Cliente *le) {
+  Cliente *p = le;
+  while (p->prox != NULL) {
+    p = p->prox;
+  }
+  return p;
 }
 // CLIENTE
 
@@ -40,412 +35,399 @@ Cliente *cria_cliente()
 // crio uma celula cliente com o prox apontado pra null
 // aloco a memoria e armazeno o valor nos campos
 {
-    Cliente *c1 = malloc(sizeof(Cliente));
-    if (c1 == NULL)
-    {
-        return NULL;
-    }
+  Cliente *c1 = malloc(sizeof(Cliente));
+  if (c1 == NULL) {
+    return NULL;
+  }
 
-    c1->nome = malloc(100 * sizeof(char));
-    c1->email = malloc(100 * sizeof(char));
-    if (c1->nome == NULL || c1->email == NULL)
-    { // senao alocar certo limpa
-        free(c1->nome);
-        free(c1->email);
-        free(c1);
-        return NULL;
-    }
+  c1->nome = malloc(100 * sizeof(char));
+  c1->email = malloc(100 * sizeof(char));
+  if (c1->nome == NULL || c1->email == NULL) { // senao alocar certo limpa
+    free(c1->nome);
+    free(c1->email);
+    free(c1);
+    return NULL;
+  }
 
-    printf("Nome:");
-    scanf("%[^\n]", c1->nome); // acesso por ponteiro
-    int n_cpf = 1;
-    char cpf[14];
-    do
-    {
-        printf("CPF:");
+  printf("Nome:");
+  scanf("%[^\n]", c1->nome); // acesso por ponteiro
+  int n_cpf = 1;
+  char cpf[14];
+  do {
+    printf("CPF:");
 
-        scanf("%s", cpf);
-        n_cpf = verifica_cpf(cpf);
+    scanf("%s", cpf);
+    n_cpf = verifica_cpf(cpf);
 
-    } while (n_cpf == 0);
-    strcpy(c1->cpf, cpf);
-    printf("Email:");
-    scanf("%s", c1->email);
-    printf("TELEFONE:");
-    scanf("%s", c1->telefone);
-    printf("NASCIMENTO:");
-    scanf("%s", c1->nascimento);
-    c1->prox = NULL;
+  } while (n_cpf == 0);
+  strcpy(c1->cpf, cpf);
+  printf("Email:");
+  scanf("%s", c1->email);
+  printf("TELEFONE:");
+  scanf("%s", c1->telefone);
+  printf("NASCIMENTO:");
+  scanf("%s", c1->nascimento);
+  c1->prox = NULL;
 
-    return c1;
+  return c1;
 }
 
 void insere_cliente_le(Cliente *inserido, Cliente *anterior)
 // jogo de ponteiros
 {
-    if (inserido == NULL || anterior == NULL)
-        return;
-    inserido->prox = anterior->prox;
-    anterior->prox = inserido;
+  if (inserido == NULL || anterior == NULL)
+    return;
+  inserido->prox = anterior->prox;
+  anterior->prox = inserido;
 }
 void cadastrar_cliente(Cliente *le)
 // adiciona cria cliente e adiciona cliente na lista;
 {
-    Cliente *c1 = cria_cliente();
-    if (c1 == NULL)
-    {
-        printf("erro ao criar novo cliente\n");
-        return;
-    }
-    Cliente *ultimo = acha_ultimo_leCliente(le);
+  Cliente *c1 = cria_cliente();
+  if (c1 == NULL) {
+    printf("erro ao criar novo cliente\n");
+    return;
+  }
+  Cliente *ultimo = acha_ultimo_leCliente(le);
 
-    insere_cliente_le(c1, ultimo);
-    printf("cliente cadastrado\n");
+  insere_cliente_le(c1, ultimo);
+  printf("cliente cadastrado\n");
 }
 
-void free_cliente(Cliente *c)
-{
-    if (c == NULL)
-    {
-        return;
-    }
-    free(c->nome);
-    free(c->email);
-    free(c);
+void free_cliente(Cliente *c) {
+  if (c == NULL) {
+    return;
+  }
+  free(c->nome);
+  free(c->email);
+  free(c);
 }
 
-void listar_clientes(Cliente *le)
-{
-    Cliente *p;
-    for (p = le->prox; p != NULL; p = p->prox)
-    {
-        printf("\n-----------------------------\n");
-        printf("Nome:%s\n", p->nome);
-        printf("Email:%s\n", p->email);
-        printf("CPF:%s\n", p->cpf);
-        printf("Numero:%s\n", p->telefone);
-        printf("Data de nascimento:%s\n", p->nascimento);
-    }
-    printf("-----------------------------\n\n");
+void listar_clientes(Cliente *le) {
+  Cliente *p;
+  for (p = le->prox; p != NULL; p = p->prox) {
+    printf("\n-----------------------------\n");
+    printf("Nome:%s\n", p->nome);
+    printf("Email:%s\n", p->email);
+    printf("CPF:%s\n", p->cpf);
+    printf("Numero:%s\n", p->telefone);
+    printf("Data de nascimento:%s\n", p->nascimento);
+  }
+  printf("-----------------------------\n\n");
 }
 
-Cliente *buscar_cliente(Cliente *lista, char *cpf)
-{
-    if (lista == NULL)
-        return NULL;
-    if (strcmp(lista->cpf, cpf) == 0)
-        return lista;
-    return buscar_cliente(lista->prox, cpf);
+Cliente *buscar_cliente(Cliente *lista, char *cpf) {
+  if (lista == NULL)
+    return NULL;
+  if (strcmp(lista->cpf, cpf) == 0)
+    return lista;
+  return buscar_cliente(lista->prox, cpf);
 }
 
-void editar_cliente(Cliente *le, char *cpf)
-{
+void editar_cliente(Cliente *le, char *cpf) {
 
-    Cliente *p = buscar_cliente(le->prox, cpf);
-    {
-        printf("Cliente encontrado!\n");
-        printf("--------------------------------\n");
-        printf("Nome: %s\n", p->nome);
-        printf("CPF: %s\n", p->cpf);
-        printf("Email: %s\n", p->email);
-        printf("Telefone: %s\n", p->telefone);
-        printf("nascimento: %s\n", p->nascimento);
-        printf("--------------------------------\n");
-    }
-    if (p == NULL)
-    {
-        printf("Cliente com CPF não encontrado. \n");
-        return;
-    }
-    int opcao = -1;
-    while (opcao != 0)
-    {
-        printf("\n--- Editando Cliente ---\n");
-        printf("1 - Editar Nome\n");
-        printf("2- Editar email\n");
-        printf("3- Ediatr Telefone\n");
-        printf("4- Editar Nascimento\n");
-        printf("0- Finalizar Edição\n");
-        printf("EScolha uma opção: ");
-        scanf("%d", &opcao);
-        while (getchar() != '\n')
-            ;
+  Cliente *p = buscar_cliente(le->prox, cpf);
+  {
+    printf("Cliente encontrado!\n");
+    printf("--------------------------------\n");
+    printf("Nome: %s\n", p->nome);
+    printf("CPF: %s\n", p->cpf);
+    printf("Email: %s\n", p->email);
+    printf("Telefone: %s\n", p->telefone);
+    printf("nascimento: %s\n", p->nascimento);
+    printf("--------------------------------\n");
+  }
+  if (p == NULL) {
+    printf("Cliente com CPF não encontrado. \n");
+    return;
+  }
+  int opcao = -1;
+  while (opcao != 0) {
+    printf("\n--- Editando Cliente ---\n");
+    printf("1 - Editar Nome\n");
+    printf("2- Editar email\n");
+    printf("3- Ediatr Telefone\n");
+    printf("4- Editar Nascimento\n");
+    printf("0- Finalizar Edição\n");
+    printf("EScolha uma opção: ");
+    scanf("%d", &opcao);
+    while (getchar() != '\n')
+      ;
 
-        switch (opcao)
-        {
-        case 1:
-            printf("Novo Nome: ");
-            scanf("%[^\n]", p->nome);
-            while (getchar() != '\n')
-                ;
-            break;
-        case 2:
-            printf("Novo email: ");
-            scanf("%s", p->email);
-            break;
-        case 3:
-            printf("Novo Telefone: ");
-            scanf("%s", p->telefone);
-            break;
-        case 4:
-            printf("Nova Data de nascimento: ");
-            scanf("%s", p->nascimento);
-            break;
-        case 0:
-            printf("Edição Finalizada.\n ");
-            break;
-        default:
-            printf("Opção invalida!");
-        }
+    switch (opcao) {
+    case 1:
+      printf("Novo Nome: ");
+      scanf("%[^\n]", p->nome);
+      while (getchar() != '\n')
+        ;
+      break;
+    case 2:
+      printf("Novo email: ");
+      scanf("%s", p->email);
+      break;
+    case 3:
+      printf("Novo Telefone: ");
+      scanf("%s", p->telefone);
+      break;
+    case 4:
+      printf("Nova Data de nascimento: ");
+      scanf("%s", p->nascimento);
+      break;
+    case 0:
+      printf("Edição Finalizada.\n ");
+      break;
+    default:
+      printf("Opção invalida!");
     }
+  }
 }
 
-void remover_cliente(Cliente *le, char *cpf)
-{
-    Cliente *ant, *atual;
-    ant = le;
-    atual = le->prox;
+void remover_cliente(Cliente *le, char *cpf) {
+  Cliente *ant, *atual;
+  ant = le;
+  atual = le->prox;
 
-    while (atual != NULL && strcmp(atual->cpf, cpf) != 0)
-    { // Preciso do anterior para religar a lista; a busca simples não olha pro anterior
-        ant = atual;
-        atual = atual->prox;
-    }
-    if (atual != NULL)
-    {
-        ant->prox = atual->prox; // retira o atual da lista
-        // quando criarmos o carrinho, precisamos liberar a memoria do carrinho do cliente, igual o professor fez com as diciplinas
-        free_cliente(atual);
-        printf("Cliente removido com sucesso!\n");
-    }
-    else
-    {
-        printf("Cliente não encontrado.\n");
-    }
+  while (atual != NULL && strcmp(atual->cpf, cpf) !=
+                              0) { // Preciso do anterior para religar a lista;
+                                   // a busca simples não olha pro anterior
+    ant = atual;
+    atual = atual->prox;
+  }
+  if (atual != NULL) {
+    ant->prox = atual->prox; // retira o atual da lista
+    // quando criarmos o carrinho, precisamos liberar a memoria do carrinho do
+    // cliente, igual o professor fez com as diciplinas
+    free_cliente(atual);
+    printf("Cliente removido com sucesso!\n");
+  } else {
+    printf("Cliente não encontrado.\n");
+  }
 }
 
-int verifica_cpf(char *cpf)
-{
-    // printf("%s\n", cpf);
-    int n = (strlen(cpf));
-    // printf("%d\n", n);
-    if (n > 11)
-    {
-        printf("CPF inválido, por favor inserir novamente: ");
-        return 0; // erro
-    }
-    return 1; // dentro do padrao
+int verifica_cpf(char *cpf) {
+  // printf("%s\n", cpf);
+  int n = (strlen(cpf));
+  // printf("%d\n", n);
+  if (n > 11) {
+    printf("CPF inválido, por favor inserir novamente: ");
+    return 0; // erro
+  }
+  return 1; // dentro do padrao
 }
 
 // PRODUTO
 
-Produto *acha_ultimo_leProduto(Produto *le)
-{
-    Produto *p = le;
-    while (p->prox != NULL)
-    {
-        p = p->prox;
-    }
-    return p;
+Produto *acha_ultimo_leProduto(Produto *le) {
+  Produto *p = le;
+  while (p->prox != NULL) {
+    p = p->prox;
+  }
+  return p;
 }
 
-Produto *cria_produto()
-{
-    Produto *p1 = malloc(sizeof(Produto));
-    p1->nome = malloc(50*sizeof(char));
-    if (p1 == NULL)
-        return NULL;
+Produto *cria_produto() {
+  Produto *p1 = malloc(sizeof(Produto));
+  if (p1 == NULL)
+    return NULL;
 
-    printf("\n--- Cadastro de Produto ---\n");
-    printf("Código do produto: ");
-    scanf("%s", p1->codigo);
-    printf("Nome do Produto: ");
-    scanf(" %[^\n]", p1->nome);
+  printf("\n--- Cadastro de Produto ---\n");
+  printf("Código do produto: ");
+  scanf("%s", p1->codigo);
+  printf("Nome do Produto: ");
+  scanf("%[^\n]", p1->nome);
+  printf("Preço: ");
+  scanf("%f", &p1->preco);
+  printf("Quantidade em estoque: ");
+  scanf("%d", &p1->quantidade);
+  p1->prox = NULL;
 
-    printf("Preço: ");
-    scanf("%f", &p1->preco);
-    printf("Quantidade em estoque: ");
-    scanf("%d", &p1->quantidade);
-    p1->prox = NULL;
-
-    return p1;
+  return p1;
 }
 
 void insere_produto_le(Produto *inserido, Produto *anterior)
 
 {
-    if (inserido == NULL || anterior == NULL)
-        return;
-    inserido->prox = anterior->prox;
-    anterior->prox = inserido;
+  if (inserido == NULL || anterior == NULL)
+    return;
+  inserido->prox = anterior->prox;
+  anterior->prox = inserido;
 }
 
-void cadastrar_produto(Produto *le)
-{
-    Produto *novo = cria_produto();
-    if (novo == NULL)
-    {
-        printf("Erro ao cadastrar novo produto");
-        return;
-    }
-    Produto *ultimo = acha_ultimo_leProduto(le);
-    insere_produto_le(novo, ultimo);
-    printf("Produto [%s] cadastrado com sucesso!\n", novo->nome);
+void cadastrar_produto(Produto *le) {
+  Produto *novo = cria_produto();
+  if (novo == NULL) {
+    printf("Erro ao cadastrar novo produto");
+    return;
+  }
+  Produto *ultimo = acha_ultimo_leProduto(le);
+  insere_produto_le(novo, ultimo);
+  printf("Produto [%s] cadastrado com sucesso!\n", novo->nome);
 }
 
-void free_produto(Produto *p)
-{
+void free_produto(Produto *p) {
 
-    if (p == NULL)
-        return;
-    free(p->nome);
-    free(p);
+  if (p == NULL)
+    return;
+  free(p->nome);
+  free(p);
 }
 
-void listar_produtos(Produto *le)
-{
+void listar_produtos(Produto *le) {
 
-    Produto *p;
-    printf("\n--- Lista de Produtos ---\n");
-    for (p = le->prox; p != NULL; p = p->prox)
-    {
-        printf("--------------------------------------------------\n");
-        printf("Código: %s    \nNome: %-20s\n", p->codigo, p->nome);
-        printf("Preço: R$ %.2f       \nQuantidade: %d\n", p->preco, p->quantidade);
-    }
+  Produto *p;
+  printf("\n--- Lista de Produtos ---\n");
+  for (p = le->prox; p != NULL; p = p->prox) {
+    printf("Código: %s   | Nome: %-20s\n", p->codigo, p->nome);
+    printf("Preço: R$ %.2f   | Quantidade: %d\n", p->preco, p->quantidade);
+  }
 }
 
-Produto *buscar_produtos(Produto *lista, char *codigo)
-{
-    if (lista == NULL)
-        return NULL;
-    if (strcmp(lista->codigo, codigo) == 0)
-        return lista;
-    return buscar_produtos(lista->prox, codigo);
+Produto *buscar_produtos(Produto *lista, char *codigo) {
+  if (lista == NULL)
+    return NULL;
+  if (strcmp(lista->codigo, codigo) == 0)
+    return lista;
+  return buscar_produtos(lista->prox, codigo);
 }
 
-void editar_produtos(Produto *le, char *codigo)
-{
-    Produto *p = buscar_produtos(le->prox, codigo);
+void editar_produtos(Produto *le, char *codigo) {
+  Produto *p = buscar_produtos(le->prox, codigo);
 
-    if (p == NULL)
-    {
-        printf("Produto não encontrado.\n");
-        return;
+  if (p == NULL) {
+    printf("Produto não encontrado.\n");
+    return;
+  }
+
+  int opcao = -1;
+  while (opcao != 0) {
+    printf("\n--- Editando Produto ---\n");
+    printf("1 - Editar Nome\n");
+    printf("2 - Editar Preço\n");
+    printf("3 - Editar Quantidade\n");
+    printf("0 - Finalizar Edição\n");
+    printf("Escolha uma opção: ");
+    scanf("%d", &opcao);
+    while (getchar() != '\n')
+      ;
+
+    switch (opcao) {
+    case 1:
+      printf("Novo Nome: ");
+      scanf("%[^\n]", p->nome);
+      while (getchar() != '\n')
+        ;
+      break;
+    case 2:
+      printf("Novo Preço: ");
+      scanf("%f", &p->preco);
+      break;
+    case 3:
+      printf("Nova Quantidade: ");
+      scanf("%d", &p->quantidade);
+      break;
+    case 0:
+      break;
+    default:
+      printf("Opção inválida!\n");
     }
-
-    int opcao = -1;
-    while (opcao != 0)
-    {
-        printf("\n--- Editando Produto ---\n");
-        printf("1 - Editar Nome\n");
-        printf("2 - Editar Preço\n");
-        printf("3 - Editar Quantidade\n");
-        printf("0 - Finalizar Edição\n");
-        printf("Escolha uma opção: ");
-        scanf("%d", &opcao);
-        while (getchar() != '\n')
-            ;
-
-        switch (opcao)
-        {
-        case 1:
-            printf("Novo Nome: ");
-            scanf("%[^\n]", p->nome);
-            while (getchar() != '\n')
-                ;
-            break;
-        case 2:
-            printf("Novo Preço: ");
-            scanf("%f", &p->preco);
-            break;
-        case 3:
-            printf("Nova Quantidade: ");
-            scanf("%d", &p->quantidade);
-            break;
-        case 0:
-            break;
-        default:
-            printf("Opção inválida!\n");
-        }
-    }
+  }
 }
 
-void remover_produtos(Produto *lista, char *codigo)
-{
-    Produto *ant = lista;
-    Produto *atual = lista->prox;
+void remover_produtos(Produto *lista, char *codigo) {
+  Produto *ant = lista;
+  Produto *atual = lista->prox;
 
-    while (atual != NULL && strcmp(atual->codigo, codigo) != 0)
-    {
-        ant = atual;
-        atual = atual->prox;
-    }
+  while (atual != NULL && strcmp(atual->codigo, codigo) != 0) {
+    ant = atual;
+    atual = atual->prox;
+  }
 
-    if (atual != NULL)
-    {
-        ant->prox = atual->prox;
-        free_produto(atual);
-        printf("Produto removido com sucesso!\n");
-    }
-    else
-    {
-        printf("Erro: Produto não encontrado.\n");
-    }
+  if (atual != NULL) {
+    ant->prox = atual->prox;
+    free_produto(atual);
+    printf("Produto removido com sucesso!\n");
+  } else {
+    printf("Erro: Produto não encontrado.\n");
+  }
 }
 
 // COMPRA
 
-// cria produto pra teste
-void cria_produto_teste(Produto *le)
-{
+// teste
 
-    Produto *p1 = malloc(sizeof(Produto));
-    p1->nome = malloc(50 * sizeof(char));
-    
-    if (p1->nome == NULL || p1== NULL)
-    {
-        free(p1->nome);
-        free(p1);
-        return;
-    }
-    
-    p1->nome = "nome teste";
-    strcpy(p1->codigo, "coditoTeste");
-    p1->preco = 4.78;
-    p1->prox = NULL;
-    p1->quantidade = 10;
-    Produto *ultimoProd = acha_ultimo_leProduto(le);
-    insere_produto_le(p1, ultimoProd);
-    printf("Produto teste criado\n");
-}
+void cria_teste(Cliente *le) {
+  Cliente *c1 = malloc(sizeof(Cliente));
 
-void cria_teste(Cliente *le)
+  if (c1 == NULL) {
+    return;
+  }
 
-{
-    Cliente *c1 = malloc(sizeof(Cliente));
+  c1->nome = malloc(100 * sizeof(char));
+  c1->email = malloc(100 * sizeof(char));
+  if (c1->nome == NULL || c1->email == NULL) { // senao alocar certo limpa
+    free(c1->nome);
+    free(c1->email);
+    free(c1);
+    return;
+  }
 
-    if (c1 == NULL)
-    {
-        return;
-    }
+  strcpy(c1->nome, "Zayra gostosa"); // acesso por ponteiro
+  strcpy(c1->cpf, "12345");
+  strcpy(c1->email, "email.teste");
+  strcpy(c1->telefone, "telefone");
+  strcpy(c1->nascimento, "12122005");
+  c1->prox = NULL;
+  Cliente *ultimo = acha_ultimo_leCliente(le);
+  insere_cliente_le(c1, ultimo);
 
-    c1->nome = malloc(100 * sizeof(char));
-    c1->email = malloc(100 * sizeof(char));
-    if (c1->nome == NULL || c1->email == NULL)
-    { // senao alocar certo limpa
-        free(c1->nome);
-        free(c1->email);
-        free(c1);
-        return;
-    }
+  // cliente 2:
 
-    c1->nome = "Zayra gostosa"; // acesso por ponteiro
-    strcpy(c1->cpf, "12345");
-    c1->email = "email.teste";
-    strcpy(c1->telefone, "telefone");
-    strcpy(c1->nascimento, "12122005");
-    c1->prox = NULL;
-    Cliente *ultimo = acha_ultimo_leCliente(le);
-    insere_cliente_le(c1, ultimo);
+  Cliente *c2 = malloc(sizeof(Cliente));
+
+  if (c2 == NULL) {
+    return;
+  }
+
+  c2->nome = malloc(100 * sizeof(char));
+  c2->email = malloc(100 * sizeof(char));
+  if (c2->nome == NULL || c2->email == NULL) { // senao alocar certo limpa
+    free(c2->nome);
+    free(c2->email);
+    free(c2);
+    return;
+  }
+  // acesso por ponteiro
+
+  strcpy(c2->nome, "gabriel");
+  strcpy(c2->cpf, "1234");
+  strcpy(c2->email, "email.teste");
+  strcpy(c2->telefone, "telefone");
+  strcpy(c2->nascimento, "12121222");
+  c2->prox = NULL;
+  Cliente *ultimo_2 = acha_ultimo_leCliente(le);
+  insere_cliente_le(c2, ultimo_2);
+
+  Cliente *c3 = malloc(sizeof(Cliente));
+
+  if (c3 == NULL) {
+    return;
+  }
+
+  c3->nome = malloc(100 * sizeof(char));
+  c3->email = malloc(100 * sizeof(char));
+  if (c3->nome == NULL || c3->email == NULL) { // senao alocar certo limpa
+    free(c3->nome);
+    free(c3->email);
+    free(c3);
+    return;
+  }
+
+  strcpy(c3->nome, "Maria"); // acesso por ponteiro
+  strcpy(c3->cpf, "123");
+  strcpy(c3->email, "email.teste");
+  strcpy(c3->telefone, "telefone");
+  strcpy(c3->nascimento, "12121222");
+  c3->prox = NULL;
+  Cliente *ultimo_3 = acha_ultimo_leCliente(le);
+  insere_cliente_le(c3, ultimo_3);
 }
