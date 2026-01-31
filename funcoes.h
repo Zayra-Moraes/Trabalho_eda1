@@ -4,7 +4,7 @@
 typedef struct produto
 {
     // fez produto como uma celula de uma le
-    int codigo;
+    char codigo[13];
     char *nome;
     float preco;
     int quantidade;
@@ -52,8 +52,8 @@ int verifica_cpf(char *cpf);
 void cadastrar_produto(Produto *le);
 void listar_produtos(Produto *le);
 Produto* acha_ultimo_leProduto(Produto *le);
-void buscar_produtos(Produto *lista, int codigo);
-void editar_produtos(Produto *lista, int codigo);
-void remover_produtos(Produto **lista, int codigo);
+Produto* buscar_produtos(Produto *lista, char *codigo);
+void editar_produtos(Produto *le, char *codigo);
+void remover_produtos(Produto *lista, char *codigo);
 
 #endif

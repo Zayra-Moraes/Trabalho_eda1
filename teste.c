@@ -40,6 +40,8 @@ int main(void) {
     return 0;
 */
 
+/*
+
 Cliente *le = cria_le_cliente();
 
     char nomes[3][20] = {"Maria Primeira", "Maria Segunda", "Maria Terceira"};
@@ -72,6 +74,31 @@ Cliente *le = cria_le_cliente();
 
     //lista final
     listar_clientes(le);
+
+*/
+
+//teste produtos
+
+    Produto *le_p = cria_le_produto();
+
+    char codigos[2][10] = {"A100", "B200"};
+    for(int i = 0; i < 2; i++) {
+        Produto *novo_p = malloc(sizeof(Produto));
+        novo_p->nome = malloc(100);
+        sprintf(novo_p->nome, "Produto Teste %d", i+1);
+        strcpy(novo_p->codigo, codigos[i]); 
+        novo_p->preco = 50.0 * (i+1);
+        novo_p->quantidade = 10;
+        novo_p->prox = NULL;
+        insere_produto_le(novo_p, acha_ultimo_leProduto(le_p));
+    }
+
+    listar_produtos(le_p);
+    editar_produtos(le_p, "B200");
+
+    remover_produtos(le_p, "A100");
+
+    listar_produtos(le_p);
 
     return 0;
 

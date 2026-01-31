@@ -195,7 +195,7 @@ void remover_cliente(Cliente *le, char *cpf)
     ant = le; 
     atual = le-> prox; 
 
-    while (atual != NULL && strcmp(atual->cpf, cpf) != 0){
+    while (atual != NULL && strcmp(atual->cpf, cpf) != 0){ //Preciso do anterior para religar a lista; a busca simples não olha pro anterior
         ant = atual; 
         atual = atual->prox; 
     }
@@ -244,7 +244,7 @@ Produto *cria_produto()
 
     printf("\n--- Cadastro de Produto ---\n");
     printf("Código do produto: ");
-    scanf("%d", &p1->codigo);
+    scanf("%s", p1->codigo);
     printf("Nome do Produto: ");
     scanf("%[^\n]", p1->nome);
     printf("Preço: ");
@@ -299,22 +299,76 @@ void listar_produtos(Produto *le)
     }
 }
 
-void buscar_produtos(Produto *lista, int codigo)
+Produto *buscar_produtos(Produto *lista, char *codigo)
 {
-    (void)lista; (void)codigo;
-    printf("teste\n");
+    if (lista == NULL)
+        return NULL;
+    if(strcmp(lista->codigo,codigo)==0)
+        return lista;
+    return buscar_produtos(lista->prox, codigo);
 }
 
-void editar_produtos(Produto *lista, int codigo)
+
+void editar_produtos(Produto *le, char *codigo)
 {
-    (void)lista; (void)codigo;
-    printf("teste\n");
+    Produto *p = buscar_produtos(le->prox, codigo);
+
+    if (p == NULL) {
+        printf("Produto não encontrado.\n");
+        return;
+    }
+
+    int opcao = -1;
+    while (opcao != 0) {
+        printf("\n--- Editando Produto ---\n");
+        printf("1 - Editar Nome\n");
+        printf("2 - Editar Preço\n");
+        printf("3 - Editar Quantidade\n");
+        printf("0 - Finalizar Edição\n");
+        printf("Escolha uma opção: ");
+        scanf("%d", &opcao);
+        while (getchar() != '\n'); 
+
+        switch (opcao) {
+            case 1:
+                printf("Novo Nome: ");
+                scanf("%[^\n]", p->nome);
+                while (getchar() != '\n');
+                break;
+            case 2:
+                printf("Novo Preço: ");
+                scanf("%f", &p->preco);
+                break;
+            case 3:
+                printf("Nova Quantidade: ");
+                scanf("%d", &p->quantidade);
+                break;
+            case 0:
+                break;
+            default:
+                printf("Opção inválida!\n");
+        }
+    }
 }
 
-void remover_produtos(Produto **lista, int codigo)
+
+void remover_produtos(Produto *lista, char *codigo)
 {
-    (void)lista; (void)codigo;
-    printf("teste\n");
+Produto *ant = lista;
+Produto *atual = lista->prox;
+
+    while (atual != NULL && strcmp(atual->codigo, codigo) != 0) {
+        ant = atual;
+        atual = atual->prox;
+    }
+
+    if (atual != NULL) {
+        ant->prox = atual->prox; 
+        free_produto(atual);      
+        printf("Produto removido com sucesso!\n");
+    } else {
+        printf("Erro: Produto não encontrado.\n");
+    }
 }
 
 // COMPRA
