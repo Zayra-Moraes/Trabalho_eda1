@@ -6,6 +6,7 @@
 
 int main(void) {
 
+    system("color 0A");
 
 /*
 //testizinho do editar cliente
