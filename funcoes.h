@@ -45,8 +45,8 @@ Cliente  * cria_cliente();
 void cadastrar_cliente(Cliente *le);
 void listar_clientes(Cliente *lista);
 Cliente *buscar_cliente(Cliente *lista, char *cpf);
-void editar_cliente(Cliente *lista, char *cpf);
-void remover_cliente(Cliente **lista, int cpf);
+void editar_cliente(Cliente *le, char *cpf);
+void remover_cliente(Cliente *le, char *cpf);
 int verifica_cpf(char *cpf);
 
 void cadastrar_produto(Produto *le);

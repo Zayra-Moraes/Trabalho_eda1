@@ -190,11 +190,7 @@ int menuCliente(Cliente *le)
         printf("Cliente encontrado!\n");
         printf("--------------------------------\n");
         printf("Nome: %s\n", c1->nome);
-<<<<<<< HEAD
-        printf("CPF: %ld\n", c1->cpf);
-=======
         printf("CPF: %s\n", c1->cpf);
->>>>>>> 41d3f812118808f6bb8ccf80ac45e9f0785ab7d4
         printf("Email: %s\n", c1->email);
         printf("Telefone: %s\n", c1->telefone);
         printf("nascimento: %s\n", c1->nascimento);

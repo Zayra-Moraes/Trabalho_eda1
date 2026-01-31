@@ -2,6 +2,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+
+
 // LISTAS
 Carrinho *cria_le_carrinho()
 {
@@ -157,12 +159,14 @@ void editar_cliente(Cliente *le, char *cpf)
         printf("0- Finalizar Edição\n");
         printf("EScolha uma opção: ");
         scanf("%d", &opcao);
+        while (getchar() != '\n');
 
         switch (opcao)
         {
         case 1:
             printf("Novo Nome: ");
             scanf("%[^\n]", p->nome);
+            while (getchar() != '\n');
             break;
         case 2:
             printf("Novo email: ");
@@ -185,9 +189,26 @@ void editar_cliente(Cliente *le, char *cpf)
     }
 }
 
-void remover_cliente(Cliente **lista, int cpf)
+void remover_cliente(Cliente *le, char *cpf)
 {
-    printf("teste");
+    Cliente *ant, *atual; 
+    ant = le; 
+    atual = le-> prox; 
+
+    while (atual != NULL && strcmp(atual->cpf, cpf) != 0){
+        ant = atual; 
+        atual = atual->prox; 
+    }
+    if (atual != NULL){
+        ant->prox = atual->prox; // retira o atual da lista
+        //quando criarmos o carrinho, precisamos liberar a memoria do carrinho do cliente, igual o professor fez com as diciplinas
+        free_cliente(atual);
+        printf("Cliente removido com sucesso!\n");
+    }
+    else {
+        printf("Cliente não encontrado.\n");
+    }
+    
 }
 
 int verifica_cpf(char *cpf)
@@ -280,17 +301,20 @@ void listar_produtos(Produto *le)
 
 void buscar_produtos(Produto *lista, int codigo)
 {
-    printf("teste");
+    (void)lista; (void)codigo;
+    printf("teste\n");
 }
 
 void editar_produtos(Produto *lista, int codigo)
 {
-    printf("teste");
+    (void)lista; (void)codigo;
+    printf("teste\n");
 }
 
 void remover_produtos(Produto **lista, int codigo)
 {
-    printf("teste");
+    (void)lista; (void)codigo;
+    printf("teste\n");
 }
 
 // COMPRA
