@@ -85,8 +85,9 @@ int menuCompra()
   return 0;
 }
 
-int menuProdutos()
+int menuProdutos(Produto *le_produto)
 {
+  cria_produto_teste(le_produto);
   int entrada = -1;
 
   while (entrada != 0)
@@ -115,19 +116,49 @@ int menuProdutos()
     {
     case 1:
       printf("cadastrar produto...\n\n");
+      cadastrar_produto(le_produto); // funcional
       break;
-
     case 2:
       printf("listar todos os produtos...\n\n");
+      listar_produtos(le_produto); // funcinal
       break;
     case 3:
+      char *entradaFind = malloc(50 * sizeof(char));
+      if (entradaFind == NULL)
+      {
+        printf("erro na inicialização de ponteiro");
+      }
+
       printf("buscar produto pelo codigo...\n\n");
+      printf("Insira o codigo do produto\n");
+      scanf("%s", entradaFind);
+      Produto *p1 = buscar_produtos(le_produto, entradaFind);
+      free(entradaFind);
+      if (p1)
+      {
+        printf("Produto encontrado!\n");
+        printf("--------------------------------\n");
+        printf("COD: %s\n", p1->codigo);
+        printf("NOME: %s\n", p1->nome);
+        printf("PREÇO: %.02f\n", p1->preco);
+        printf("QUANTIDADE EM ESTOQUE: %d\n", p1->quantidade);
+        printf("--------------------------------\n");
+        break;
+      }
+      printf("Produto nao encontrado!");
+
       break;
     case 4:
       printf("editar dados do produto...\n\n");
+      char *entradaEdit = malloc(50 * sizeof(char));
+      if (entradaEdit == NULL)
+      {
+        printf("erro na inicialização de ponteiro");
+      }
       break;
     case 5:
       printf("remover produto\n\n");
+
       break;
     case 0:
       printf("saindo...\n\n");
@@ -203,18 +234,19 @@ int menuCliente(Cliente *le)
       printf("editar dados do cliente...\n\n");
       char cpf_digitado[12];
       printf("Por favor digite o cpf do cliente que deseja alterar os dados: ");
-      scanf("%s",cpf_digitado);
-      Cliente *c=buscar_cliente(le, cpf_digitado);
+      scanf("%s", cpf_digitado);
+      Cliente *c = buscar_cliente(le, cpf_digitado);
       if (c)
         editar_cliente(le, cpf_digitado);
-      else{
+      else
+      {
         printf("Nenhum cliente encontrado com esse cpf!");
       }
       break;
     case 5:
       printf("remover cliente...\n\n");
       printf("Por favor digite o cpf do cliente que deseja remover: ");
-      scanf("%s",cpf_digitado);
+      scanf("%s", cpf_digitado);
       remover_cliente(le, cpf_digitado);
       break;
     case 0:
@@ -268,7 +300,7 @@ int menuPrincipal()
 
     case 2:
       printf("Entrando no Menu de Produtos...\n\n");
-      menuProdutos();
+      menuProdutos(le_produto);
       break;
     case 3:
       printf("Entrando no Modo Compra...\n\n");

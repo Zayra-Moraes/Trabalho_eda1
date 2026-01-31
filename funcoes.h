@@ -49,6 +49,7 @@ void editar_cliente(Cliente *le, char *cpf);
 void remover_cliente(Cliente *le, char *cpf);
 int verifica_cpf(char *cpf);
 
+void cria_produto_teste(Produto *le);
 void cadastrar_produto(Produto *le);
 void listar_produtos(Produto *le);
 Produto* acha_ultimo_leProduto(Produto *le);
