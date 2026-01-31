@@ -56,4 +56,6 @@ Produto* buscar_produtos(Produto *lista, char *codigo);
 void editar_produtos(Produto *le, char *codigo);
 void remover_produtos(Produto *lista, char *codigo);
 
+void cria_teste(Cliente *le);
+
 #endif

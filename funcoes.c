@@ -120,13 +120,14 @@ void listar_clientes(Cliente *le)
     Cliente *p;
     for (p = le->prox; p != NULL; p = p->prox)
     {
-        printf("/////////////////\n");
+        printf("\n-----------------------------\n");
         printf("Nome:%s\n", p->nome);
         printf("Email:%s\n", p->email);
         printf("CPF:%s\n", p->cpf);
         printf("Numero:%s\n", p->telefone);
         printf("Data de nascimento:%s\n", p->nascimento);
     }
+    printf("-----------------------------\n\n");
 }
 
 Cliente *buscar_cliente(Cliente *lista, char *cpf)
@@ -141,8 +142,19 @@ Cliente *buscar_cliente(Cliente *lista, char *cpf)
 void editar_cliente(Cliente *le, char *cpf)
 {
 
-    Cliente *p = buscar_cliente(le->prox, cpf);
 
+    Cliente *p = buscar_cliente(le->prox, cpf);
+    {
+        printf("Cliente encontrado!\n");
+        printf("--------------------------------\n");
+        printf("Nome: %s\n", p->nome);
+        printf("CPF: %s\n", p->cpf);
+        printf("Email: %s\n", p->email);
+        printf("Telefone: %s\n", p->telefone);
+        printf("nascimento: %s\n", p->nascimento);
+        printf("--------------------------------\n");
+    
+    }
     if (p == NULL)
     {
         printf("Cliente com CPF não encontrado. \n");
@@ -213,9 +225,9 @@ void remover_cliente(Cliente *le, char *cpf)
 
 int verifica_cpf(char *cpf)
 {
-    printf("%s\n", cpf);
+    // printf("%s\n", cpf);
     int n = (strlen(cpf));
-    printf("%d\n", n);
+    // printf("%d\n", n);
     if (n > 11)
     {
         printf("CPF inválido, por favor inserir novamente: ");
@@ -294,7 +306,7 @@ void listar_produtos(Produto *le)
     printf("\n--- Lista de Produtos ---\n");
     for (p = le->prox; p != NULL; p = p->prox)
     {
-        printf("Código: %d   | Nome: %-20s\n", p->codigo, p->nome);
+        printf("Código: %s   | Nome: %-20s\n", p->codigo, p->nome);
         printf("Preço: R$ %.2f   | Quantidade: %d\n", p->preco, p->quantidade);
     }
 }
@@ -372,3 +384,36 @@ Produto *atual = lista->prox;
 }
 
 // COMPRA
+
+
+
+//teste
+
+void cria_teste(Cliente *le)
+{
+  Cliente *c1 = malloc(sizeof(Cliente));
+
+  if (c1 == NULL)
+  {
+    return ;
+  }
+
+  c1->nome = malloc(100 * sizeof(char));
+  c1->email = malloc(100 * sizeof(char));
+  if (c1->nome == NULL || c1->email == NULL)
+  { // senao alocar certo limpa
+    free(c1->nome);
+    free(c1->email);
+    free(c1);
+    return ;
+  }
+
+  c1->nome = "Zayra gostosa"; // acesso por ponteiro
+  strcpy(c1->cpf, "12345");
+  c1->email = "email.teste";
+  strcpy(c1->telefone, "telefone");
+  strcpy(c1->nascimento , "12122005");
+  c1->prox = NULL;
+  Cliente * ultimo =acha_ultimo_leCliente(le);
+  insere_cliente_le(c1,ultimo);
+}

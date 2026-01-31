@@ -5,35 +5,35 @@
 #include <string.h>
 // #include <windows.h>
 
-void cria_cliente_teste(Cliente *le)
-{
-  Cliente *c1 = malloc(sizeof(Cliente));
+// void cria_cliente_teste(Cliente *le)
+// {
+//   Cliente *c1 = malloc(sizeof(Cliente));
 
-  if (c1 == NULL)
-  {
-    return ;
-  }
+//   if (c1 == NULL)
+//   {
+//     return ;
+//   }
 
-  c1->nome = malloc(100 * sizeof(char));
-  c1->email = malloc(100 * sizeof(char));
-  if (c1->nome == NULL || c1->email == NULL)
-  { // senao alocar certo limpa
-    free(c1->nome);
-    free(c1->email);
-    free(c1);
-    return ;
-  }
+//   c1->nome = malloc(100 * sizeof(char));
+//   c1->email = malloc(100 * sizeof(char));
+//   if (c1->nome == NULL || c1->email == NULL)
+//   { // senao alocar certo limpa
+//     free(c1->nome);
+//     free(c1->email);
+//     free(c1);
+//     return ;
+//   }
 
-  c1->nome = "Zayra gostosa"; // acesso por ponteiro
-  strcpy(c1->cpf, "12345");
-  c1->email = "email.teste";
-  strcpy(c1->telefone, "telefone");
-  strcpy(c1->nascimento , "12122005");
-  c1->prox = NULL;
-  Cliente * ultimo =acha_ultimo_leCliente(le);
-  insere_cliente_le(c1,ultimo);
-}
-// menu nem comecei
+//   c1->nome = "Zayra gostosa"; // acesso por ponteiro
+//   strcpy(c1->cpf, "12345");
+//   c1->email = "email.teste";
+//   strcpy(c1->telefone, "telefone");
+//   strcpy(c1->nascimento , "12122005");
+//   c1->prox = NULL;
+//   Cliente * ultimo =acha_ultimo_leCliente(le);
+//   insere_cliente_le(c1,ultimo);
+// }
+
 int menuCompra()
 {
   int entrada = -1;
@@ -202,11 +202,20 @@ int menuCliente(Cliente *le)
     case 4:
       printf("editar dados do cliente...\n\n");
       char cpf_digitado[12];
-      if (verifica_cpf(cpf_digitado))
+      printf("Por favor digite o cpf do cliente que deseja alterar os dados: ");
+      scanf("%s",cpf_digitado);
+      Cliente *c=buscar_cliente(le, cpf_digitado);
+      if (c)
         editar_cliente(le, cpf_digitado);
+      else{
+        printf("Nenhum cliente encontrado com esse cpf!");
+      }
       break;
     case 5:
-      printf("remover cliente\n\n");
+      printf("remover cliente...\n\n");
+      printf("Por favor digite o cpf do cliente que deseja remover: ");
+      scanf("%s",cpf_digitado);
+      remover_cliente(le, cpf_digitado);
       break;
     case 0:
       printf("saindo...\n\n");
@@ -224,7 +233,7 @@ int menuPrincipal()
   Cliente *le_cliente = cria_le_cliente();
   Produto *le_produto = cria_le_produto();
   Carrinho *le_carrinho = cria_le_carrinho();
-  cria_cliente_teste(le_cliente);
+  cria_teste(le_cliente);
 
   int entrada = -1;
 
