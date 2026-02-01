@@ -34,17 +34,27 @@
 //   insere_cliente_le(c1,ultimo);
 // }
 
-int menuCompra() {
+int menuCompra(Cliente *cliente, Produto *le_produtos)
+{
+
   int entrada = -1;
 
-  while (entrada != 0) {
+  while (entrada != 0)
+  {
+    listar_carrinho(cliente);
+    printf("\n\n");
 
     printf("--------------Menu de Compras--------------\n");
     // chamar o listar produtos
-    printf("0 - Para voltar\n");
+    printf("1 - Listar carrinho\n");
+    printf("2 - Adicionar Produto ao carrinho\n");
+    printf("3 - Remover produto do carrinho\n");
+    printf("4 - Finalizar Compra\n");
+    printf("0 - Sair\n");
     printf("\nPor favor digite um numero:\n");
     printf("--------------------------------------------\n");
-    if (scanf("%d", &entrada) != 1) {
+    if (scanf("%d", &entrada) != 1)
+    {
       printf("entrada invalida\n");
       while (getchar() != '\n')
         ;
@@ -53,41 +63,52 @@ int menuCompra() {
     while (getchar() != '\n')
       ;
 
-    switch (entrada) {
-    case 1:
-      printf("cadastrar Produto...\n\n");
-      break;
+    switch (entrada)
+    {
 
+    case 1:
+      printf("listar produtos\n");
+      lista_produtos_short(le_produtos);
+      break;
     case 2:
-      printf("listar carrinho\n\n");
+      printf("Adicionar produto ao carrinho\n\n");
+      lista_produtos_short(le_produtos);
+      printf("insira o codigo do produto que deseja inserir\n");
+      char *EntradaCod = malloc(13 * sizeof(char));
+      int EntradaQtd;
+      scanf("%s", EntradaCod);
+      printf("insira a quantidade desse produto que deseja adicionar ao carrinho\n");
+      scanf("%d", &EntradaQtd);
+      adicionar_ao_carrinho(cliente, EntradaCod, EntradaQtd, le_produtos);
+      free(EntradaCod);
       break;
     case 3:
-      printf("Adicionar produto ao carrinho\n\n");
+      printf("Remover produto do carrinho\n\n");
       break;
     case 4:
-      printf("Remover produto\n\n");
-      break;
-    case 5:
       printf("finalizar compra\n\n");
       break;
     case 0:
       printf("saindo...\n\n");
-      return 0;
+      break;
     default:
       printf("opcao invalida\n");
+      return 0;
       break;
     }
   }
   return 0;
 }
 
-int menuProdutos(Produto *le_produto) {
+int menuProdutos(Produto *le_produto)
+{
   cria_produto_teste(le_produto);
   int entrada = -1;
 
-  while (entrada != 0) {
+  while (entrada != 0)
+  {
 
-    printf("--------------Menu de Produtos--------------\n");
+    printf("\n--------------Menu de Produtos--------------\n");
     printf("1 - Cadastrar produto\n");
     printf("2 - Listar todos os produtos\n");
     printf("3 - Buscar produto pelo codigo\n");
@@ -96,7 +117,8 @@ int menuProdutos(Produto *le_produto) {
     printf("0 - Para voltar\n");
     printf("\nPor favor digite um numero:\n");
     printf("--------------------------------------------\n");
-    if (scanf("%d", &entrada) != 1) {
+    if (scanf("%d", &entrada) != 1)
+    {
       printf("entrada invalida\n");
       while (getchar() != '\n')
         ;
@@ -105,7 +127,8 @@ int menuProdutos(Produto *le_produto) {
     while (getchar() != '\n')
       ;
 
-    switch (entrada) {
+    switch (entrada)
+    {
     case 1:
       printf("cadastrar produto...\n\n");
       cadastrar_produto(le_produto); // funcional
@@ -116,7 +139,8 @@ int menuProdutos(Produto *le_produto) {
       break;
     case 3:
       char *entradaFind = malloc(13 * sizeof(char));
-      if (entradaFind == NULL) {
+      if (entradaFind == NULL)
+      {
         printf("erro na inicialização de ponteiro");
       }
 
@@ -125,7 +149,8 @@ int menuProdutos(Produto *le_produto) {
       scanf("%s", entradaFind);
       Produto *p1 = buscar_produtos(le_produto, entradaFind);
       free(entradaFind);
-      if (p1) {
+      if (p1)
+      {
         printf("Produto encontrado!\n");
         printf("--------------------------------\n");
         printf("COD: %s\n", p1->codigo);
@@ -141,7 +166,8 @@ int menuProdutos(Produto *le_produto) {
     case 4:
       printf("editar dados do produto...\n\n");
       char *entradaEdit = malloc(13 * sizeof(char));
-      if (entradaEdit == NULL) {
+      if (entradaEdit == NULL)
+      {
         printf("erro na inicialização de ponteiro");
       }
       listar_produtos(le_produto);
@@ -154,13 +180,14 @@ int menuProdutos(Produto *le_produto) {
     case 5:
       printf("remover produto\n\n");
       char *codigo = calloc(50, sizeof(char));
-      if(codigo == NULL){
+      if (codigo == NULL)
+      {
         printf("nao inicializaei");
       }
       listar_produtos(le_produto);
       printf("Por favor digite o codigo do produto que deseja remover: ");
-      scanf("%s", codigo) ;  
-            
+      scanf("%s", codigo);
+
       remover_produtos(le_produto, codigo);
       // free(codigo);
 
@@ -176,10 +203,13 @@ int menuProdutos(Produto *le_produto) {
   return 0;
 }
 
-int menuCliente(Cliente *le) {
+int menuCliente(Cliente *le)
+{
+
   int entrada = -1;
 
-  while (entrada != 0) {
+  while (entrada != 0)
+  {
 
     printf("--------------Menu de Clientes--------------\n");
     printf("1 - Cadastrar Cliente\n");
@@ -191,7 +221,8 @@ int menuCliente(Cliente *le) {
     printf("--------------------------------------------\n");
     printf("\nPor favor digite um numero:\n");
 
-    if (scanf("%d", &entrada) !=1) { // se ele nao conseguir ler um int o scanf vai retornar 0
+    if (scanf("%d", &entrada) != 1)
+    { // se ele nao conseguir ler um int o scanf vai retornar 0
       printf("entrada invalida\n");
       while (getchar() != '\n')
         ;
@@ -200,7 +231,8 @@ int menuCliente(Cliente *le) {
     while (getchar() != '\n')
       ;
 
-    switch (entrada) {
+    switch (entrada)
+    {
     case 1:
       printf("cadastrar cliente...\n\n");
       cadastrar_cliente(le);
@@ -218,7 +250,8 @@ int menuCliente(Cliente *le) {
       scanf("%s", cpf);
       // Sleep(1.5);
       Cliente *c1 = buscar_cliente(le, cpf);
-      if (c1) {
+      if (c1)
+      {
         printf("Cliente encontrado!\n");
         printf("--------------------------------\n");
         printf("Nome: %s\n", c1->nome);
@@ -240,7 +273,8 @@ int menuCliente(Cliente *le) {
       Cliente *c = buscar_cliente(le, cpf_digitado);
       if (c)
         editar_cliente(le, cpf_digitado);
-      else {
+      else
+      {
         printf("Nenhum cliente encontrado com esse cpf!");
       }
       break;
@@ -261,15 +295,18 @@ int menuCliente(Cliente *le) {
   return 0;
 }
 
-int menuPrincipal() {
+int menuPrincipal()
+{
   Cliente *le_cliente = cria_le_cliente();
   Produto *le_produto = cria_le_produto();
-  Carrinho *le_carrinho = cria_le_carrinho();
-  cria_teste(le_cliente);
+  // Carrinho *le_carrinho = cria_le_carrinho();
+  cria_cliente_teste(le_cliente);
+  cria_produto_teste(le_produto);
 
   int entrada = -1;
 
-  while (entrada != 0) {
+  while (entrada != 0)
+  {
 
     printf("\n              BEM VINDO A obelisco           \n");
     printf("----------------Menu Principal----------------\n");
@@ -280,7 +317,8 @@ int menuPrincipal() {
     printf("------------------------------------------------\n");
     printf("\nPor favor digite um numero:\n");
 
-    if (scanf("%d", &entrada) != 1) {
+    if (scanf("%d", &entrada) != 1)
+    {
       printf("entrada invalida\n");
       while (getchar() != '\n')
         ;
@@ -289,7 +327,8 @@ int menuPrincipal() {
     while (getchar() != '\n')
       ;
 
-    switch (entrada) {
+    switch (entrada)
+    {
     case 1:
       printf("Entrando no Menu de clientes...\n\n");
       menuCliente(le_cliente);
@@ -300,7 +339,16 @@ int menuPrincipal() {
       menuProdutos(le_produto);
       break;
     case 3:
-      printf("Entrando no Modo Compra...\n\n");
+      char *EntradaCPF = malloc(13 * sizeof(char));
+      printf("\nEntrando no Modo Compra...\n\n");
+      printf("por favor entre com seu CPF\n");
+      scanf("%s", EntradaCPF);
+      if (login(EntradaCPF, le_cliente) != NULL)
+      {
+        menuCompra(buscar_cliente(le_cliente, EntradaCPF), le_produto);
+        free(EntradaCPF);
+      }
+      printf("\n login nao realizado com sucesso!\n");
       break;
     case 0:
       printf("saindo...\n\n");
