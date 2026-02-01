@@ -8,6 +8,8 @@ Carrinho *cria_le_carrinho() {
   Carrinho *le;
   le = malloc(sizeof(Carrinho));
   le->prox = NULL;
+  le->codigo[0] = '\0';
+  le->qtd = 0;
   return le;
 }
 Cliente *cria_le_cliente() {
@@ -74,6 +76,7 @@ Cliente *cria_cliente()
   printf("NASCIMENTO:");
   scanf("%s", c1->nascimento);
   c1->prox = NULL;
+  c1 ->carrinho = cria_le_carrinho();// carrinho vazio para o cliente
 
   return c1;
 }
@@ -101,12 +104,17 @@ void cadastrar_cliente(Cliente *le)
 }
 
 void free_cliente(Cliente *c) {
-  if (c == NULL) {
-    return;
-  }
-  free(c->nome);
-  free(c->email);
-  free(c);
+
+    if (c == NULL) {
+        return;
+    }
+    if (c -> carrinho != NULL) {
+        esvaziar_carrinho(c->carrinho);
+        free(c->carrinho);
+    }
+    free(c->nome);
+    free(c->email);
+    free(c);
 }
 
 void listar_clientes(Cliente *le) {
@@ -376,6 +384,101 @@ void remover_produtos(Produto *lista, char *codigo) {
 // COMPRA
 
 
+
+Carrinho *acha_ultimo_leCarrinho(Carrinho *le) {
+    if(!le){
+        return NULL;
+    }
+    Carrinho *p = le;
+    while (p->prox != NULL){
+        p = p->prox;
+    }
+    return p;
+}
+
+Carrinho *cria_item_carrinho(const char *codigo, int qtd) {
+    
+    Carrinho *it = malloc(sizeof(Carrinho));
+    if (!it) return NULL;
+    strncpy(it->codigo, codigo, 12);
+    it->codigo[12] = '\0';
+    it->qtd = qtd;
+    it ->prox = NULL;
+    return it;
+}
+
+void insere_item_carrinho(Carrinho *item, Carrinho *le){
+    if (!item || !le){
+        return;
+    }
+    Carrinho *ultimo = acha_ultimo_leCarrinho(le);
+    ultimo ->prox = item;
+}
+
+
+int adicionar_ao_carrinho (Cliente *c, const char *codigo, int qtd, Produto *le_produto) {
+
+    if (!c || !c-> carrinho) return 0;
+    Produto *p = buscar_produtos(le_produto, (char*)codigo);
+    if (!p) {
+        printf("Produto não existe.\n");
+        return 0;
+    }
+    if (qtd <= 0) {
+        printf("Qauntidade inválida.\n");
+        return 0;
+    }
+    if (qtd > p->quantidade) {
+        printf("Apenas %d unidades disponíveis em estoque.\n", p->quantidade);
+        return 0;
+    }
+    //se já existe no carrinho soma
+    for (Carrinho *it = c->carrinho->prox; it != NULL; it = it->prox) {
+        if (strcmp(it->codigo, codigo) == 0) {
+            it->qtd +=qtd;
+            return 1;
+        }
+    }
+    Carrinho *novo = cria_item_carrinho(codigo, qtd);
+    insere_item_carrinho(novo, c->carrinho);
+    return 1;
+  
+}
+
+void listar_carrinho(Cliente *c, Produto *le_produto) {
+    if (!c || !c->carrinho){
+        return;
+    }
+    printf("\n---------------- Carrinho ----------------\n");
+    int vazio = 1;
+    for (Carrinho *it = c->carrinho->prox; it != NULL; it = it->prox) {
+        vazio = 0;;
+        Produto *p = buscar_produtos(le_produto, it->codigo);
+        if (p) {
+            printf("COD: %s | Nome: %s | Preço: R$ %.2f | Qtd: %d\n", it->codigo, p->nome, p->preco, it->qtd);
+        } else {
+            printf("COD: %s | (produto removido do estoque) | Qtd: %d\n", it->codigo, it->qtd);
+        }
+    }
+    if (vazio) {
+        printf("Carrinho vazio.\n");
+    }
+}
+
+void esvaziar_carrinho(Carrinho *le){
+    
+    if (le == NULL){
+        return;
+    }
+    Carrinho *p = le->prox;
+    Carrinho *tmp;
+    while (p != NULL){
+        tmp = p;
+        p = p->prox;
+        free(tmp);
+    }
+    le->prox = NULL;
+}
 
 
 

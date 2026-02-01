@@ -14,9 +14,9 @@ typedef struct produto
 typedef struct carrinho
 {
     // fez carrinho como uma celula de le
-    int codigo_prod;
+    char codigo[13];
     int qtd;
-    Produto *produto;
+    Produto *produto; 
     struct carrinho *prox;
 } Carrinho;
 
@@ -38,7 +38,6 @@ Carrinho * cria_le_carrinho();
 Cliente *acha_ultimo_leCliente(Cliente *le);
 
 void insere_produto_le(Produto *inserido, Produto *anterior);
-void insere_carrinho_le(Carrinho x, Carrinho *le);
 void insere_cliente_le(Cliente *inserido, Cliente *anterior);
 
 void free_cliente(Cliente *c);
@@ -59,5 +58,13 @@ void editar_produtos(Produto *le, char *codigo);
 void remover_produtos(Produto *lista, char *codigo);
 
 void cria_teste(Cliente *le);
+
+
+Carrinho *acha_ultimo_leCarrinho(Carrinho *le);
+Carrinho *cria_item_carrinho(const char *codigo, int qtd);
+void insere_item_carrinho(Carrinho *item, Carrinho *le);
+int adicionar_ao_carrinho (Cliente *c, const char *codigo, int qtd, Produto *le_produto);
+void listar_carrinho(Cliente *c, Produto *le_produto);
+void esvaziar_carrinho(Carrinho *le);
 
 #endif
