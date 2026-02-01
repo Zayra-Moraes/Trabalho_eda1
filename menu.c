@@ -157,8 +157,7 @@ int menuCliente(Cliente *le)
     printf("--------------------------------------------\n");
     printf("\nPor favor digite um numero:\n");
 
-    if (scanf("%d", &entrada) != 1)
-    { // se ele nao conseguir ler um int o scanf vai retornar 0
+    if (scanf("%d", &entrada) !=1) { // se ele nao conseguir ler um int o scanf vai retornar 0
       printf("entrada invalida\n");
       while (getchar() != '\n')
         ;

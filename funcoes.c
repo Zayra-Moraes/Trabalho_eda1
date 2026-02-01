@@ -52,9 +52,9 @@ Cliente *cria_cliente()
   }
 
   printf("Nome:");
-  char *nome=malloc(100*sizeof(char));
-  scanf("%[^\n]",nome); // acesso por ponteiro
-  strcpy(c1->nome,nome);
+  char *nome = malloc(100 * sizeof(char));
+  scanf("%[^\n]", nome); // acesso por ponteiro
+  strcpy(c1->nome, nome);
   free(nome);
   int n_cpf = 1;
   char cpf[14];
@@ -67,9 +67,9 @@ Cliente *cria_cliente()
   } while (n_cpf == 0);
   strcpy(c1->cpf, cpf);
   printf("Email:");
-  char *email=malloc(100*(sizeof(char)));
+  char *email = malloc(100 * (sizeof(char)));
   scanf("%s", email);
-  strcpy(c1->email,email);
+  strcpy(c1->email, email);
   free(email);
   printf("TELEFONE:");
   scanf("%s", c1->telefone);
@@ -104,17 +104,16 @@ void cadastrar_cliente(Cliente *le)
 }
 
 void free_cliente(Cliente *c) {
-
-    if (c == NULL) {
-        return;
-    }
-    if (c -> carrinho != NULL) {
-        esvaziar_carrinho(c->carrinho);
-        free(c->carrinho);
-    }
-    free(c->nome);
-    free(c->email);
-    free(c);
+  if (c == NULL) {
+    return;
+  }
+  if (c->carrinho != NULL) {
+    esvaziar_carrinho(c->carrinho);
+    free(c->carrinho);
+  }
+  free(c->nome);
+  free(c->email);
+  free(c);
 }
 
 void listar_clientes(Cliente *le) {
@@ -241,8 +240,9 @@ Produto *acha_ultimo_leProduto(Produto *le) {
 
 Produto *cria_produto() {
   Produto *p1 = malloc(sizeof(Produto));
-  
-  if (p1 == NULL) return NULL;
+
+  if (p1 == NULL)
+    return NULL;
 
   p1->nome = malloc(50 * sizeof(char));
   if (p1->nome == NULL) {
@@ -256,7 +256,7 @@ Produto *cria_produto() {
   scanf("%s", codigo);
   strcpy(p1->codigo, codigo);
   printf("Nome do Produto: ");
-  char *nome=malloc(50*sizeof(char));
+  char *nome = malloc(50 * sizeof(char));
   scanf(" %[^\n]", nome);
   strcpy(p1->nome, nome);
   free(nome);
@@ -372,7 +372,7 @@ void remover_produtos(Produto *lista, char *codigo) {
   }
   if (atual != NULL) {
     ant->prox = atual->prox;
-    //free_produto(atual);
+    // free_produto(atual);
     free(atual->nome);
     free(atual);
     printf("Produto removido com sucesso!\n");
@@ -382,9 +382,6 @@ void remover_produtos(Produto *lista, char *codigo) {
 }
 
 // COMPRA
-
-
-
 Carrinho *acha_ultimo_leCarrinho(Carrinho *le) {
     if(!le){
         return NULL;
@@ -481,8 +478,6 @@ void esvaziar_carrinho(Carrinho *le){
 }
 
 
-
-
 // teste
 
 void cria_produto_teste(Produto *le) {
@@ -499,7 +494,7 @@ void cria_produto_teste(Produto *le) {
     /* code */
   }
   strcpy(p1->codigo, "codigoTeste");
-  strcpy(p1->nome , "nome teste");
+  strcpy(p1->nome, "nome teste");
   p1->preco = 4.50;
   p1->prox = NULL;
   p1->quantidade = 10;
