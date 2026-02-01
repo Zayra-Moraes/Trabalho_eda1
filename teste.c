@@ -4,7 +4,7 @@
 #include <string.h>
 
 
-int main(void) {
+int teste_main(void) {
 
     system("color 0A");
 
