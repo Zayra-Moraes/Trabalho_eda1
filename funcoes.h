@@ -72,12 +72,4 @@ void listar_carrinho(Cliente *c, Produto *le_produto);
 void esvaziar_carrinho(Carrinho *le);
 
 
-
-Carrinho *acha_ultimo_leCarrinho(Carrinho *le);
-Carrinho *cria_item_carrinho(const char *codigo, int qtd);
-void insere_item_carrinho(Carrinho *item, Carrinho *le);
-int adicionar_ao_carrinho (Cliente *c, const char *codigo, int qtd, Produto *le_produto);
-void listar_carrinho(Cliente *c, Produto *le_produto);
-void esvaziar_carrinho(Carrinho *le);
-
 #endif

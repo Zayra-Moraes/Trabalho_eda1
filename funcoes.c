@@ -76,7 +76,7 @@ Cliente *cria_cliente()
   printf("NASCIMENTO:");
   scanf("%s", c1->nascimento);
   c1->prox = NULL;
-  c1 ->carrinho = cria_le_carrinho();// carrinho vazio para o cliente
+  c1->carrinho = cria_le_carrinho();
 
   return c1;
 }
