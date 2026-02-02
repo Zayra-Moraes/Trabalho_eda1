@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <ctype.h>
 
 // LISTAS
 /* Carrinho *cria_le_carrinho()
@@ -32,7 +33,7 @@ Produto *cria_le_produto()
 
 // CLIENTE
 
-Cliente *cria_cliente()
+Cliente *cria_cliente(Cliente *le)
 // crio uma celula cliente com o prox apontado pra null
 // aloco a memoria e armazeno o valor nos campos
 {
@@ -65,6 +66,12 @@ Cliente *cria_cliente()
 
     scanf("%s", cpf);
     n_cpf = verifica_cpf(cpf);
+    if (cpf_existe(le, cpf))
+    {
+      printf("CPF ja cadastrado. Digite outro.\n");
+      n_cpf = 0;
+      continue;
+    }
 
   } while (n_cpf == 0);
   strcpy(c1->cpf, cpf);
@@ -102,12 +109,13 @@ void insere_cliente_le(Cliente *inserido, Cliente *anterior)
 void cadastrar_cliente(Cliente *le)
 // adiciona cria cliente e adiciona cliente na lista;
 {
-  Cliente *c1 = cria_cliente();
+  Cliente *c1 = cria_cliente(le);
   if (c1 == NULL)
   {
     printf("erro ao criar novo cliente\n");
     return;
   }
+  
   Cliente *ultimo = acha_ultimo_leCliente(le);
 
   insere_cliente_le(c1, ultimo);
@@ -253,8 +261,28 @@ int verifica_cpf(char *cpf)
     printf("CPF inválido, por favor inserir novamente: ");
     return 0; // erro
   }
+  for (int i = 0; i < n; i++)
+  {
+    if (!isdigit(cpf[i])){
+      printf("Erro: CPF deve conter apenas números.\n");
+      return 0;
+    }
+  }
   return 1; // dentro do padrao
 }
+
+int cpf_existe(Cliente *le, char *cpf)
+{
+  Cliente *p = le->prox; 
+  while (p != NULL)
+  {
+    if (strcmp(p->cpf, cpf) == 0)
+      return 1; // já existe
+    p = p->prox;
+  }
+  return 0; // não existe
+}
+
 
 // PRODUTO
 void listar_produtos_carrinho_short(Produto *le)

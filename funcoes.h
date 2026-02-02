@@ -44,13 +44,14 @@ void insere_cliente_le(Cliente *inserido, Cliente *anterior);
 //Cliente
 void cria_cliente_teste(Cliente *le);
 void free_cliente(Cliente *c);
-Cliente  * cria_cliente();
+Cliente  * cria_cliente(Cliente *le);
 void cadastrar_cliente(Cliente *le);
 void listar_clientes(Cliente *lista);
 Cliente *buscar_cliente(Cliente *lista, char *cpf);
 void editar_cliente(Cliente *le, char *cpf);
 void remover_cliente(Cliente *le, char *cpf);
 int verifica_cpf(char *cpf);
+int cpf_existe(Cliente *le, char *cpf);
 void cria_teste(Cliente *le);
 
 //Produto
