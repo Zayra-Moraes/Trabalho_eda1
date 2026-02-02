@@ -73,7 +73,8 @@ int adicionar_ao_carrinho (Cliente *c,  char *codigo, int qtd, Produto *le_produ
 void listar_carrinho(Cliente *c);
 void esvaziar_carrinho(Carrinho *le);
 Cliente * login(char *cpf,Cliente *le_cliente);
-
+Produto *busca_item(Produto *le, char *codigo);
+void remove_item(Produto *le_carrinho, Produto *p_quero_remover, int qtd, Produto *le_produtos);
 
 
 #endif

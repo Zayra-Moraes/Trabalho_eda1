@@ -1,4 +1,5 @@
 #include "funcoes.h"
+// #include <cstddef>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -366,7 +367,7 @@ void lista_produtos_short(Produto *le)
   printf("\n--- Lista de Produtos ---\n");
   for (Produto *p = le->prox; p != NULL; p = p->prox)
   {
-    printf("\nNome: %s  |  Preço: R$%.2f  | Quantidade disp.: %d   | Cod: %s\n", p->nome, p->preco, p->quantidade, p->codigo);
+    printf("\nCod: %s | Nome: %s  |  Preço: R$%.2f  | Quantidade disp.: %d   | \n",p->codigo, p->nome, p->preco, p->quantidade);
     /* code */
   }
   printf("\n");
@@ -562,7 +563,7 @@ int adicionar_ao_carrinho(Cliente *c, char *codigo_produto, int qtd_desejada, Pr
     }
     Produto *inserido = cria_produto_Pcarrinho(p->codigo, p->nome, p->preco, qtd_desejada);
     Produto *ultimo = acha_ultimo_leProduto(c->carrinho->le_produtos);
-    printf("achei original");
+    // printf("achei original");
     insere_produto_le(inserido, ultimo);
     return 1;
   }
@@ -620,6 +621,50 @@ void listar_carrinho(Cliente *c)
   }
   le->prox = NULL;
 } */
+
+Produto *busca_item(Produto *le, char *codigo){
+  for(Produto *p=le; p!=NULL;p=p->prox){
+    if(strcmp(p->codigo, codigo)==0){
+      printf("COD: %s | Nome: %s | Preco: R$ %.2f | Qtd: %d\n", p->codigo, p->nome, p->preco, p->quantidade);
+      return p;
+    }
+  }
+  printf("Produto nao encontrado");
+  return NULL;
+}
+
+void remove_item(Produto *le_carrinho, Produto *p_quero_remover, int qtd, Produto *le_produtos){
+  if(p_quero_remover->quantidade == 1 || p_quero_remover->quantidade==qtd){
+    Produto*ant=le_carrinho;
+    Produto *atual=le_carrinho->prox;
+    while (atual != NULL && strcmp(atual->codigo, p_quero_remover->codigo) != 0)
+    {
+      ant = atual;
+      atual = atual->prox;
+    }
+    if (atual != NULL)
+    {
+      ant->prox = atual->prox;
+      // free_produto(atual);
+      Produto *p_estoque=buscar_produtos(le_produtos,p_quero_remover->codigo);
+      p_estoque->quantidade=p_estoque->quantidade+qtd;
+      free(atual->nome);
+      free(atual);
+      printf("Produto removido com sucesso!\n");
+      
+      
+    }
+    else
+    {
+      printf("Erro: Produto não encontrado.\n");
+    }
+  }
+  else{
+    p_quero_remover->quantidade=p_quero_remover->quantidade-qtd;
+    Produto *p_estoque=buscar_produtos(le_produtos,p_quero_remover->codigo);
+    p_estoque->quantidade=p_estoque->quantidade+qtd;
+  }
+}
 
 // teste
 

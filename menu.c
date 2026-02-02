@@ -1,38 +1,11 @@
 #include "menu.h"
 #include "funcoes.h"
+// #include <algorithm>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 // #include <windows.h>
 
-// void cria_cliente_teste(Cliente *le)
-// {
-//   Cliente *c1 = malloc(sizeof(Cliente));
-
-//   if (c1 == NULL)
-//   {
-//     return ;
-//   }
-
-//   c1->nome = malloc(100 * sizeof(char));
-//   c1->email = malloc(100 * sizeof(char));
-//   if (c1->nome == NULL || c1->email == NULL)
-//   { // senao alocar certo limpa
-//     free(c1->nome);
-//     free(c1->email);
-//     free(c1);
-//     return ;
-//   }
-
-//   c1->nome = "Zayra gostosa"; // acesso por ponteiro
-//   strcpy(c1->cpf, "12345");
-//   c1->email = "email.teste";
-//   strcpy(c1->telefone, "telefone");
-//   strcpy(c1->nascimento , "12122005");
-//   c1->prox = NULL;
-//   Cliente * ultimo =acha_ultimo_leCliente(le);
-//   insere_cliente_le(c1,ultimo);
-// }
 
 int menuCompra(Cliente *cliente, Produto *le_produtos)
 {
@@ -46,7 +19,7 @@ int menuCompra(Cliente *cliente, Produto *le_produtos)
 
     printf("--------------Menu de Compras--------------\n");
     // chamar o listar produtos
-    printf("1 - Listar carrinho\n");
+    printf("1 - Listar Produtos no estoque\n");
     printf("2 - Adicionar Produto ao carrinho\n");
     printf("3 - Remover produto do carrinho\n");
     printf("4 - Finalizar Compra\n");
@@ -84,6 +57,21 @@ int menuCompra(Cliente *cliente, Produto *le_produtos)
       break;
     case 3:
       printf("Remover produto do carrinho\n\n");
+      printf("Por favor digite o codigo do produto que deseja remover: ");
+      char *codigo=malloc(13*sizeof(char));
+      scanf("%s", codigo);
+      Produto *p = busca_item(cliente->carrinho->le_produtos, codigo);
+      free(codigo);
+      if(p!=NULL){
+        if(p->quantidade == 1) remove_item(cliente->carrinho->le_produtos, p,1,le_produtos);
+        else{
+          int q;
+          printf("Digite a quantidade qque deseja remover: ");
+          scanf("%d",&q);
+          remove_item(cliente->carrinho->le_produtos, p,q,le_produtos);
+        }
+      }
+      else{printf("Produto nao encontrado");}
       break;
     case 4:
       printf("finalizar compra\n\n");
