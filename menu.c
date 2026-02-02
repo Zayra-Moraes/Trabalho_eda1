@@ -22,7 +22,8 @@ int menuCompra(Cliente *cliente, Produto *le_produtos)
     printf("1 - Listar Produtos no estoque\n");
     printf("2 - Adicionar Produto ao carrinho\n");
     printf("3 - Remover produto do carrinho\n");
-    printf("4 - Finalizar Compra\n");
+    printf("4 - Esvaziar Carrinho\n");
+    printf("5 - Finalizar Compra\n");
     printf("0 - Sair\n");
     printf("\nPor favor digite um numero:\n");
     printf("--------------------------------------------\n");
@@ -74,6 +75,17 @@ int menuCompra(Cliente *cliente, Produto *le_produtos)
       else{printf("Produto nao encontrado");}
       break;
     case 4:
+      printf("Esvaziar Carrinho\n\n");
+      if (!cliente || !cliente->carrinho || cliente->carrinho->le_produtos->prox == NULL) {
+        printf("Carrinho já está vazio.\n");
+      } 
+      else {
+        esvaziar_carrinho(cliente->carrinho, le_produtos);
+        printf("Carrinho esvaziado com sucesso.\n");
+      }
+      break;
+    
+    case 5:
       printf("finalizar compra\n\n");
       break;
     case 0:
@@ -125,7 +137,7 @@ int menuProdutos(Produto *le_produto)
       printf("listar todos os produtos...\n\n");
       listar_produtos(le_produto); // funcinal
       break;
-    case 3:
+    case 3:{
       char *entradaFind = malloc(13 * sizeof(char));
       if (entradaFind == NULL)
       {
@@ -151,6 +163,7 @@ int menuProdutos(Produto *le_produto)
       printf("Produto nao encontrado!");
 
       break;
+    }
     case 4:
       printf("editar dados do produto...\n\n");
       char *entradaEdit = malloc(13 * sizeof(char));
@@ -326,7 +339,7 @@ int menuPrincipal()
       printf("Entrando no Menu de Produtos...\n\n");
       menuProdutos(le_produto);
       break;
-    case 3:
+    case 3:{
       char *EntradaCPF = malloc(13 * sizeof(char));
       printf("\nEntrando no Modo Compra...\n\n");
       printf("por favor entre com seu CPF\n");
@@ -338,6 +351,7 @@ int menuPrincipal()
       }
       printf("\n login nao realizado com sucesso!\n");
       break;
+    }
     case 0:
       printf("saindo...\n\n");
       return 0;

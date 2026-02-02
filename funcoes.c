@@ -604,23 +604,21 @@ void listar_carrinho(Cliente *c)
   } */
 }
 
-/* void esvaziar_carrinho(Carrinho *le)
+ void esvaziar_carrinho(Carrinho *c, Produto *le_produtos)
 {
 
-  if (le == NULL)
-  {
-    return;
-  }
-  Carrinho *p = le->prox;
-  Carrinho *tmp;
+  if (!c || !c->le_produtos) return;
+
+  Produto *p = c->le_produtos->prox;
   while (p != NULL)
   {
-    tmp = p;
-    p = p->prox;
-    free(tmp);
+    Produto *next = p->prox;
+    // remove_item atualiza o estoque e libera o nó do carrinho
+    remove_item(c->le_produtos, p, p->quantidade, le_produtos);
+    p = next;
   }
-  le->prox = NULL;
-} */
+  c->le_produtos->prox = NULL;
+} 
 
 Produto *busca_item(Produto *le, char *codigo){
   for(Produto *p=le; p!=NULL;p=p->prox){
