@@ -63,7 +63,7 @@ void cadastrar_produto(Produto *le);
 void listar_produtos(Produto *le);
 void lista_produtos_short(Produto *le);
 Produto* acha_ultimo_leProduto(Produto *le);
-Produto* buscar_produtos(Produto *lista, char *codigo);
+Produto* buscar_produtos(Produto *lista, char *termo);
 void editar_produtos(Produto *le, char *codigo);
 void remover_produtos(Produto *lista, char *codigo);
 

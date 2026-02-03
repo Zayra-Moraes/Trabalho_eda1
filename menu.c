@@ -159,7 +159,7 @@ int menuProdutos(Produto *le_produto)
     printf("\n--------------Menu de Produtos--------------\n");
     printf("1 - Cadastrar produto\n");
     printf("2 - Listar todos os produtos\n");
-    printf("3 - Buscar produto pelo codigo\n");
+    printf("3 - Buscar produto\n");
     printf("4 - Editar dados de um produto\n");
     printf("5 - Remover produto\n");
     printf("0 - Para voltar\n");
@@ -193,8 +193,8 @@ int menuProdutos(Produto *le_produto)
         printf("erro na inicialização de ponteiro");
       }
 
-      printf("buscar produto pelo codigo...\n\n");
-      printf("Insira o codigo do produto\n");
+      printf("buscar produto...\n\n");
+      printf("Insira o codigo ou o nome do produto\n");
       scanf("%s", entradaFind);
       Produto *p1 = buscar_produtos(le_produto, entradaFind);
       free(entradaFind);

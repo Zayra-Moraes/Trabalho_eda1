@@ -479,16 +479,14 @@ void listar_produtos(Produto *le)
   }
 }
 
-Produto *buscar_produtos(Produto *lista, char *codigo)
+Produto *buscar_produtos(Produto *lista, char *termo)
 {
-
   if (lista == NULL)
     return NULL;
-  if (strcmp(lista->codigo, codigo) == 0)
+  if (strcmp(lista->codigo, termo) == 0 || strstr(lista->nome, termo) != NULL)
     return lista;
-  return buscar_produtos(lista->prox, codigo);
+  return buscar_produtos(lista->prox, termo);
 }
-
 void editar_produtos(Produto *le, char *codigo)
 {
   Produto *p = buscar_produtos(le->prox, codigo);
