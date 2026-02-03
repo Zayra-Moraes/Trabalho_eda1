@@ -136,7 +136,6 @@ int menuCompra(Cliente *cliente, Produto *le_produtos)
 
 int menuProdutos(Produto *le_produto)
 {
-  // cria_produto_teste(le_produto);
   int entrada = -1;
 
   while (entrada != 0)
