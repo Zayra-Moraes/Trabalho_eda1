@@ -161,13 +161,13 @@ void listar_clientes(Cliente *le)
   printf("-----------------------------\n\n");
 }
 
-Cliente *buscar_cliente(Cliente *lista, char *cpf)
+Cliente *buscar_cliente(Cliente *lista, char *termo)
 {
   if (lista == NULL)
     return NULL;
-  if (strcmp(lista->cpf, cpf) == 0)
+  if (strcmp(lista->cpf, termo) == 0 || strstr(lista->nome, termo) != NULL)
     return lista;
-  return buscar_cliente(lista->prox, cpf);
+  return buscar_cliente(lista->prox, termo);
 }
 
 void editar_cliente(Cliente *le, char *cpf)

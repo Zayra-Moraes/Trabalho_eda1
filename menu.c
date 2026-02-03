@@ -264,7 +264,7 @@ int menuCliente(Cliente *le)
     printf("--------------Menu de Clientes--------------\n");
     printf("1 - Cadastrar Cliente\n");
     printf("2 - Listar todos os Clientes\n");
-    printf("3 - Buscar clientes pelo CPF\n");
+    printf("3 - Buscar clientes\n");
     printf("4 - Editar dados de um cliente\n");
     printf("5 - Remover Cliente\n");
     printf("0 - Para voltar\n");
@@ -294,13 +294,13 @@ int menuCliente(Cliente *le)
       Sleep(1000);
       break;
     case 3:
-      printf("buscar cliente pelo cpf...\n\n");
-      printf("Por favor digite o cpf do cliente que deseja pesquisar:  ");
+      printf("Buscar cliente...\n\n");
+      printf("Por favor digite o cpf ou o nome do cliente que deseja pesquisar:  ");
       // char cpf[12];
       char *cpf = malloc(12 * (sizeof(char)));
       scanf("%s", cpf);
       // Sleep(1.5);
-      Cliente *c1 = buscar_cliente(le, cpf);
+      Cliente *c1 = buscar_cliente(le->prox, cpf);
       if (c1)
       {
         printf("Cliente encontrado!\n");
@@ -322,7 +322,7 @@ int menuCliente(Cliente *le)
       char cpf_digitado[12];
       printf("Por favor digite o cpf do cliente que deseja alterar os dados: ");
       scanf("%s", cpf_digitado);
-      Cliente *c = buscar_cliente(le, cpf_digitado);
+      Cliente *c = buscar_cliente(le->prox, cpf_digitado);
       if (c)
         editar_cliente(le, cpf_digitado);
       else
@@ -335,7 +335,7 @@ int menuCliente(Cliente *le)
       printf("Por favor digite o cpf do cliente que deseja remover: ");
       char *cpf_digitado2 = malloc(12 * sizeof(char));
       scanf("%s", cpf_digitado2);
-      Cliente *c2 = buscar_cliente(le, cpf_digitado2);
+      Cliente *c2 = buscar_cliente(le->prox, cpf_digitado2);
       if (c2)
       {
         printf("Cliente encontrado!\n");
@@ -433,29 +433,33 @@ int menuPrincipal()
       printf("\nEntrando no Modo Compra...\n\n");
       printf("por favor entre com seu CPF\n");
       scanf("%s", EntradaCPF);
-      if (login(EntradaCPF, le_cliente) != NULL)
-      {
-        char *senha_digitada=malloc(100*(sizeof(char)));
-        printf("Por favor digite a senha: ");
-        scanf(" %s",senha_digitada);
-        Cliente *_c=buscar_cliente(le_cliente, EntradaCPF);
-        int validacao=verifica_senha(_c,senha_digitada);
-        if(validacao == 1){
-          printf("login feito com sucesso\n");
-          printf("Bem vindo!\n");
-          menuCompra(buscar_cliente(le_cliente, EntradaCPF), le_produto);
-          free(EntradaCPF);
-          free(_c);
-        }
-        else{
-          printf("Senha invalida!");
-          Sleep(1000);
-          break;
-        }
+
+      Cliente *_c = buscar_cliente(le_cliente->prox, EntradaCPF);
+      if (_c == NULL) {
+        printf("\n login nao realizado! Usuario nao encontrado...\n");
+        free(EntradaCPF);
+        break;
       }
-      printf("\n login nao realizado! Usuario nao encontrado...\n");
+
+      char *senha_digitada = malloc(100 * sizeof(char));
+      printf("Por favor digite a senha: ");
+      scanf(" %s", senha_digitada);
+
+      int validacao = verifica_senha(_c, senha_digitada);
+      if (validacao == 1) {
+        printf("login feito com sucesso\n");
+        printf("Bem vindo!\n");
+        menuCompra(_c, le_produto);   // usa o cliente já encontrado
+      } else {
+        printf("Senha invalida!");
+        Sleep(1000);
+      }
+
+      free(senha_digitada);
+      free(EntradaCPF);
       break;
     }
+
     case 0:
       printf("saindo...\n\n");
       return 0;

@@ -48,7 +48,7 @@ void free_cliente(Cliente *c);
 Cliente  * cria_cliente(Cliente *le);
 void cadastrar_cliente(Cliente *le);
 void listar_clientes(Cliente *lista);
-Cliente *buscar_cliente(Cliente *lista, char *cpf);
+Cliente *buscar_cliente(Cliente *lista, char *termo);
 void editar_cliente(Cliente *le, char *cpf);
 void remover_cliente(Cliente *le, char *cpf);
 int verifica_cpf(char *cpf);
