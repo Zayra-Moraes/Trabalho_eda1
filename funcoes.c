@@ -718,8 +718,41 @@ float calcula_valor(Produto *produtos_cliente)
   return valor_total;
 }
 
-void finalizar(){
-  
+void comprar(Produto *le_carrinho,Produto *p_quero_remover){
+  Produto*ant=le_carrinho;
+  Produto *atual=le_carrinho->prox;
+  while (atual != NULL && strcmp(atual->codigo, p_quero_remover->codigo) != 0)
+  {
+    ant = atual;
+    atual = atual->prox;
+  }
+  if (atual != NULL)
+  {
+    ant->prox = atual->prox;
+    // free_produto(atual);
+    free(atual->nome);
+    free(atual);
+    printf("Produto removido com sucesso!\n");
+    
+    
+  }
+  else
+  {
+    printf("Erro: Produto não encontrado.\n");
+  }
+}
+
+
+void finalizar(Carrinho *c, Produto *le_produtos){
+  if (!c || !c->le_produtos) return;
+
+  Produto *p = c->le_produtos->prox;
+  while (p != NULL)
+  {
+    Produto *next = p->prox;
+    comprar(c->le_produtos,p);
+    p = next;
+  }
 }
 
 // teste

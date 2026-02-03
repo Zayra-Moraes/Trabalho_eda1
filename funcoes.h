@@ -78,6 +78,7 @@ Produto *busca_item(Produto *le, char *codigo);
 void remove_item(Produto *le_carrinho, Produto *p_quero_remover, int qtd, Produto *le_produtos);
 float calcula_valor(Produto *produtos_cliente);
 int calcula_itens(Produto *produtos_cliente);
-
+void comprar(Produto *le_carrinho,Produto *p_quero_remover);
+void finalizar(Carrinho *c, Produto *le_produtos);
 
 #endif

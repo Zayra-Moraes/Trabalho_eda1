@@ -91,12 +91,13 @@ int menuCompra(Cliente *cliente, Produto *le_produtos)
       printf("->Resultado final do carrinho: R$%.2f com %d itens.",valor,calcula_itens(cliente->carrinho->le_produtos));
       int i=0;
       while(i==0){
-        printf("Tem certeza que deseja finalizar a compora? (Y/N) ");
+        printf("\nTem certeza que deseja finalizar a compora? (Y/N) ");
         char resposta;
         scanf(" %c",&resposta);
         if(resposta == 'Y' || resposta == 'y'){
           printf("Sua compra foi finalizada! Volte sempre!");
           i=1;
+          finalizar(cliente->carrinho, le_produtos);
         }
         else if(resposta == 'N' || resposta == 'n'){
           printf("Compra cancelada! Seu carrinho ainda está salvo se quiser tentar de novo depois!");
@@ -120,7 +121,7 @@ int menuCompra(Cliente *cliente, Produto *le_produtos)
 
 int menuProdutos(Produto *le_produto)
 {
-  cria_produto_teste(le_produto);
+  //cria_produto_teste(le_produto);
   int entrada = -1;
 
   while (entrada != 0)
@@ -320,7 +321,7 @@ int menuPrincipal()
   Produto *le_produto = cria_le_produto();
   // Carrinho *le_carrinho = cria_le_carrinho();
   cria_cliente_teste(le_cliente);
-  cria_produto_teste(le_produto);
+  //cria_produto_teste(le_produto);
 
   int entrada = -1;
 
