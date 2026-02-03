@@ -4,7 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-// #include <windows.h>
+#include <windows.h>
 
 int menuCompra(Cliente *cliente, Produto *le_produtos)
 {
@@ -13,9 +13,10 @@ int menuCompra(Cliente *cliente, Produto *le_produtos)
 
   while (entrada != 0)
   {
+    
     listar_carrinho(cliente);
     printf("\n\n");
-
+    Sleep(1000);
     printf("--------------Menu de Compras--------------\n");
     // chamar o listar produtos
     printf("1 - Listar Produtos no estoque\n");
@@ -42,6 +43,7 @@ int menuCompra(Cliente *cliente, Produto *le_produtos)
     case 1:
       printf("listar produtos\n");
       lista_produtos_short(le_produtos);
+      Sleep(1000);
       break;
     case 2:
       printf("Adicionar produto ao carrinho\n\n");
@@ -64,9 +66,9 @@ int menuCompra(Cliente *cliente, Produto *le_produtos)
       free(codigo);
       if (p != NULL)
       {
-        if (p->quantidade == 1)
+        if (p->quantidade == 1){
           remove_item(cliente->carrinho->le_produtos, p, 1, le_produtos);
-          printf("Produto removido com sucesso!");
+          printf("Produto removido com sucesso!");}
         else
         {
           int q;
@@ -109,6 +111,7 @@ int menuCompra(Cliente *cliente, Produto *le_produtos)
           printf("Sua compra foi finalizada! Volte sempre!");
           i = 1;
           finalizar(cliente->carrinho, le_produtos);
+          system("cls");
         }
         else if (resposta == 'N' || resposta == 'n')
         {
@@ -140,7 +143,7 @@ int menuProdutos(Produto *le_produto)
 
   while (entrada != 0)
   {
-
+    Sleep(1000);
     printf("\n--------------Menu de Produtos--------------\n");
     printf("1 - Cadastrar produto\n");
     printf("2 - Listar todos os produtos\n");
@@ -245,7 +248,7 @@ int menuCliente(Cliente *le)
 
   while (entrada != 0)
   {
-
+    Sleep(1000);
     printf("--------------Menu de Clientes--------------\n");
     printf("1 - Cadastrar Cliente\n");
     printf("2 - Listar todos os Clientes\n");
@@ -276,6 +279,7 @@ int menuCliente(Cliente *le)
     case 2:
       printf("listar todos os clientes...\n\n");
       listar_clientes(le);
+      Sleep(1000);
       break;
     case 3:
       printf("buscar cliente pelo cpf...\n\n");
@@ -295,6 +299,7 @@ int menuCliente(Cliente *le)
         printf("Telefone: %s\n", c1->telefone);
         printf("nascimento: %s\n", c1->nascimento);
         printf("--------------------------------\n");
+        Sleep(1000);
         break;
       }
       printf("Cliente nao encontrado!");
@@ -329,6 +334,7 @@ int menuCliente(Cliente *le)
         printf("Telefone: %s\n", c2->telefone);
         printf("nascimento: %s\n", c2->nascimento);
         printf("--------------------------------\n");
+        Sleep(1000);
         
         int i = 0;
         while (i == 0)
@@ -378,7 +384,7 @@ int menuPrincipal()
 
   while (entrada != 0)
   {
-
+    system("cls");
     printf("\n              BEM VINDO AO OBELISCO           \n");
     printf("----------------Menu Principal----------------\n");
     printf("1 - Gerenciamento de Clientes\n");
@@ -420,7 +426,7 @@ int menuPrincipal()
         menuCompra(buscar_cliente(le_cliente, EntradaCPF), le_produto);
         free(EntradaCPF);
       }
-      printf("\n login nao realizado com sucesso!\n");
+      printf("\n login nao realizado!\n");
       break;
     }
     case 0:

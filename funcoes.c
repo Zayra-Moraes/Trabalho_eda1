@@ -504,7 +504,7 @@ Cliente *login(char *cpf, Cliente *le)
   if (c1 != NULL)
   {
     printf("login feito com sucesso\n");
-    printf("Bem vindo %s\n", c1->nome);
+    printf("Bem vindo!\n");
     return c1; // logou
   }
   return NULL;
@@ -603,6 +603,7 @@ int adicionar_ao_carrinho(Cliente *c, char *codigo_produto, int qtd_desejada, Pr
 
 void listar_carrinho(Cliente *c)
 {
+  printf("Cliente: %s\n",c->nome);
   printf("\n------------------ Carrinho ------------------\n");
   if (!c || !c->carrinho || c->carrinho->le_produtos->prox == NULL)
   {
