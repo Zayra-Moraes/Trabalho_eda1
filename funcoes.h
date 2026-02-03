@@ -55,6 +55,7 @@ int verifica_cpf(char *cpf);
 int cpf_existe(Cliente *le, char *cpf);
 void cria_teste(Cliente *le);
 int verifica_senha(Cliente *c, char *senha);
+void formatar_data(char data[]);
 
 //Produto
 void cria_produto_teste(Produto *le);

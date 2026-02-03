@@ -90,6 +90,7 @@ Cliente *cria_cliente(Cliente *le)
   scanf("%s", c1->telefone);
   printf("NASCIMENTO:");
   scanf("%s", c1->nascimento);
+  formatar_data(c1->nascimento);
   c1->prox = NULL;
   c1->carrinho = cria_item_carrinho(cpf);
 
@@ -296,6 +297,13 @@ int verifica_senha(Cliente *c, char *senha){
   }
   return 0;//foi diferente
 
+}
+
+void formatar_data(char data[]){
+  if(strlen(data)!=8) return;
+  char nova[11];
+  sprintf(nova,"%.2s/%.2s/%.4s",data,data+2,data+4);
+  strcpy(data,nova);
 }
 
 // PRODUTO
@@ -909,6 +917,7 @@ void cria_cliente_teste(Cliente *le)
   strcpy(c1->email, "email.teste");
   strcpy(c1->telefone, "telefone");
   strcpy(c1->nascimento, "12122005");
+  formatar_data(c1->nascimento);
   strcpy(c1->senha, "123");
   c1->prox = NULL;
   c1->carrinho = cria_item_carrinho(c1->cpf);
@@ -941,7 +950,8 @@ void cria_cliente_teste(Cliente *le)
   strcpy(c2->cpf, "1234");
   strcpy(c2->email, "email.teste");
   strcpy(c2->telefone, "telefone");
-  strcpy(c2->nascimento, "12121222");
+  strcpy(c2->nascimento, "15072005");
+  formatar_data(c2->nascimento);
   strcpy(c2->senha, "1234");
   c2->prox = NULL;
   c2->carrinho = cria_item_carrinho(c2->cpf);
@@ -971,7 +981,8 @@ void cria_cliente_teste(Cliente *le)
   strcpy(c3->cpf, "123");
   strcpy(c3->email, "email.teste");
   strcpy(c3->telefone, "telefone");
-  strcpy(c3->nascimento, "12121222");
+  strcpy(c3->nascimento, "24012006");
+  formatar_data(c3->nascimento);
   strcpy(c3->senha, "12345");
   c3->prox = NULL;
   c3->carrinho = cria_item_carrinho(c3->cpf);
