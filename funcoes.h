@@ -76,6 +76,8 @@ void esvaziar_carrinho(Carrinho *c, Produto *le_produtos);
 Cliente * login(char *cpf,Cliente *le_cliente);
 Produto *busca_item(Produto *le, char *codigo);
 void remove_item(Produto *le_carrinho, Produto *p_quero_remover, int qtd, Produto *le_produtos);
+float calcula_valor(Produto *produtos_cliente);
+int calcula_itens(Produto *produtos_cliente);
 
 
 #endif

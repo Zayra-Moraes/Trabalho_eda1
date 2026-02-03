@@ -604,7 +604,7 @@ int adicionar_ao_carrinho(Cliente *c, char *codigo_produto, int qtd_desejada, Pr
 
 void listar_carrinho(Cliente *c)
 {
-  printf("\n---------------- Carrinho ----------------\n");
+  printf("\n------------------ Carrinho ------------------\n");
   if (!c || !c->carrinho || c->carrinho->le_produtos->prox == NULL)
   {
     printf("Carrinho vazio!!");
@@ -626,6 +626,7 @@ void listar_carrinho(Cliente *c)
       printf("COD: %s | (produto removido do estoque) | Qtd: %d\n", p->codigo, p->quantidade);
     } */
   }
+  printf("\n--- Qtd de itens: %d -- Valor final: R$%.2f---\n",calcula_itens(c->carrinho->le_produtos),calcula_valor(c->carrinho->le_produtos));
   /* if (vazio)
   {
     printf("Carrinho vazio.\n");
@@ -690,6 +691,35 @@ void remove_item(Produto *le_carrinho, Produto *p_quero_remover, int qtd, Produt
     Produto *p_estoque=buscar_produtos(le_produtos,p_quero_remover->codigo);
     p_estoque->quantidade=p_estoque->quantidade+qtd;
   }
+}
+
+int calcula_itens(Produto *produtos_cliente)
+{
+  int item_final=0;
+  for (Produto *p = produtos_cliente->prox; p != NULL; p = p->prox)
+  {
+    int item=1;
+    int qtd=p->quantidade;
+    item=item*qtd;
+    item_final=item_final+item;
+  }
+  return item_final;
+}
+
+float calcula_valor(Produto *produtos_cliente)
+{
+  float valor_total = 0, valor = 0;
+  for (Produto *p = produtos_cliente->prox; p != NULL; p = p->prox)
+  {
+    int qtd=p->quantidade;
+    valor = p->preco * qtd;
+    valor_total += valor;
+  }
+  return valor_total;
+}
+
+void finalizar(){
+  
 }
 
 // teste
