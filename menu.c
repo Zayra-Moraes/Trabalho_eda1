@@ -121,7 +121,6 @@ int menuCompra(Cliente *cliente, Produto *le_produtos)
 
 int menuProdutos(Produto *le_produto)
 {
-  //cria_produto_teste(le_produto);
   int entrada = -1;
 
   while (entrada != 0)
@@ -321,7 +320,7 @@ int menuPrincipal()
   Produto *le_produto = cria_le_produto();
   // Carrinho *le_carrinho = cria_le_carrinho();
   cria_cliente_teste(le_cliente);
-  //cria_produto_teste(le_produto);
+  cria_produto_teste(le_produto);
 
   int entrada = -1;
 
