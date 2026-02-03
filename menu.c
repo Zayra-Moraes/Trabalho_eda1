@@ -108,14 +108,26 @@ int menuCompra(Cliente *cliente, Produto *le_produtos)
         scanf(" %c", &resposta);
         if (resposta == 'S' || resposta == 's')
         {
-          printf("Sua compra foi finalizada! Volte sempre!");
-          i = 1;
-          finalizar(cliente->carrinho, le_produtos);
-          system("cls");
+          printf("\nDigite sua senha: ");
+          char *senha_dgt=malloc(100*sizeof(char));
+          scanf(" %s",senha_dgt);
+          int validacao=verifica_senha(cliente,senha_dgt);
+          if(validacao==1){
+            printf("Sua compra foi finalizada! Volte sempre!");
+            i = 1;
+            finalizar(cliente->carrinho, le_produtos);
+            Sleep(1500);
+            system("cls");
+          }
+          else{
+            printf("\nSenha incorreta!\n");
+            printf("Compra cancelada...\n\n");
+            i=1;
+          }
         }
         else if (resposta == 'N' || resposta == 'n')
         {
-          printf("Compra cancelada! Seu carrinho ainda está salvo se quiser tentar de novo depois!");
+          printf("\nCompra cancelada! Seu carrinho ainda esta salvo se quiser tentar de novo depois!\n");
           i = 1;
         }
         else
@@ -423,10 +435,25 @@ int menuPrincipal()
       scanf("%s", EntradaCPF);
       if (login(EntradaCPF, le_cliente) != NULL)
       {
-        menuCompra(buscar_cliente(le_cliente, EntradaCPF), le_produto);
-        free(EntradaCPF);
+        char *senha_digitada=malloc(100*(sizeof(char)));
+        printf("Por favor digite a senha: ");
+        scanf(" %s",senha_digitada);
+        Cliente *_c=buscar_cliente(le_cliente, EntradaCPF);
+        int validacao=verifica_senha(_c,senha_digitada);
+        if(validacao == 1){
+          printf("login feito com sucesso\n");
+          printf("Bem vindo!\n");
+          menuCompra(buscar_cliente(le_cliente, EntradaCPF), le_produto);
+          free(EntradaCPF);
+          free(_c);
+        }
+        else{
+          printf("Senha invalida!");
+          Sleep(1000);
+          break;
+        }
       }
-      printf("\n login nao realizado!\n");
+      printf("\n login nao realizado! Usuario nao encontrado...\n");
       break;
     }
     case 0:

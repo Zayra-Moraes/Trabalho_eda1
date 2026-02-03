@@ -44,10 +44,12 @@ Cliente *cria_cliente(Cliente *le)
 
   c1->nome = malloc(100 * sizeof(char));
   c1->email = malloc(100 * sizeof(char));
+  c1->senha=malloc(100 * sizeof(char));
   if (c1->nome == NULL || c1->email == NULL)
   { // senao alocar certo limpa
     free(c1->nome);
     free(c1->email);
+    free(c1->senha);
     free(c1);
     return NULL;
   }
@@ -74,6 +76,11 @@ Cliente *cria_cliente(Cliente *le)
 
   } while (n_cpf == 0);
   strcpy(c1->cpf, cpf);
+  printf("Senha: ");
+  char *senha=malloc(100*sizeof(char));
+  scanf(" %s",senha);
+  strcpy(c1->senha,senha);
+  free(senha);
   printf("Email:");
   char *email = malloc(100 * (sizeof(char)));
   scanf("%s", email);
@@ -148,6 +155,7 @@ void listar_clientes(Cliente *le)
     printf("CPF:%s\n", p->cpf);
     printf("Numero:%s\n", p->telefone);
     printf("Data de nascimento:%s\n", p->nascimento);
+    // printf("Senha: %s\n", p->senha);
   }
   printf("-----------------------------\n\n");
 }
@@ -282,6 +290,13 @@ int cpf_existe(Cliente *le, char *cpf)
   return 0; // não existe
 }
 
+int verifica_senha(Cliente *c, char *senha){
+  if(strcmp(c->senha,senha)==0){
+    return 1;//foi igual
+  }
+  return 0;//foi diferente
+
+}
 
 // PRODUTO
 void listar_produtos_carrinho_short(Produto *le)
@@ -503,8 +518,8 @@ Cliente *login(char *cpf, Cliente *le)
   Cliente *c1 = buscar_cliente(le, cpf);
   if (c1 != NULL)
   {
-    printf("login feito com sucesso\n");
-    printf("Bem vindo!\n");
+    // printf("login feito com sucesso\n");
+    // printf("Bem vindo!\n");
     return c1; // logou
   }
   return NULL;
@@ -879,10 +894,12 @@ void cria_cliente_teste(Cliente *le)
 
   c1->nome = malloc(100 * sizeof(char));
   c1->email = malloc(100 * sizeof(char));
+  c1->senha=malloc(100*sizeof(char));
   if (c1->nome == NULL || c1->email == NULL)
   { // senao alocar certo limpa
     free(c1->nome);
     free(c1->email);
+    free(c1->senha);
     free(c1);
     return;
   }
@@ -892,6 +909,7 @@ void cria_cliente_teste(Cliente *le)
   strcpy(c1->email, "email.teste");
   strcpy(c1->telefone, "telefone");
   strcpy(c1->nascimento, "12122005");
+  strcpy(c1->senha, "123");
   c1->prox = NULL;
   c1->carrinho = cria_item_carrinho(c1->cpf);
   Cliente *ultimo = acha_ultimo_leCliente(le);
@@ -908,10 +926,12 @@ void cria_cliente_teste(Cliente *le)
 
   c2->nome = malloc(100 * sizeof(char));
   c2->email = malloc(100 * sizeof(char));
+  c2->senha=malloc(100*sizeof(char));
   if (c2->nome == NULL || c2->email == NULL)
   { // senao alocar certo limpa
     free(c2->nome);
     free(c2->email);
+    free(c2->senha);
     free(c2);
     return;
   }
@@ -922,6 +942,7 @@ void cria_cliente_teste(Cliente *le)
   strcpy(c2->email, "email.teste");
   strcpy(c2->telefone, "telefone");
   strcpy(c2->nascimento, "12121222");
+  strcpy(c2->senha, "1234");
   c2->prox = NULL;
   c2->carrinho = cria_item_carrinho(c2->cpf);
   Cliente *ultimo_2 = acha_ultimo_leCliente(le);
@@ -936,10 +957,12 @@ void cria_cliente_teste(Cliente *le)
 
   c3->nome = malloc(100 * sizeof(char));
   c3->email = malloc(100 * sizeof(char));
+  c3->senha=malloc(100*sizeof(char));
   if (c3->nome == NULL || c3->email == NULL)
   { // senao alocar certo limpa
     free(c3->nome);
     free(c3->email);
+    free(c3->senha);
     free(c3);
     return;
   }
@@ -949,6 +972,7 @@ void cria_cliente_teste(Cliente *le)
   strcpy(c3->email, "email.teste");
   strcpy(c3->telefone, "telefone");
   strcpy(c3->nascimento, "12121222");
+  strcpy(c3->senha, "12345");
   c3->prox = NULL;
   c3->carrinho = cria_item_carrinho(c3->cpf);
   Cliente *ultimo_3 = acha_ultimo_leCliente(le);

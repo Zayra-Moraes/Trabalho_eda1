@@ -26,6 +26,7 @@ typedef struct cliente
     char *email;
     char telefone[15];
     char nascimento[11];
+    char *senha;
     struct carrinho *carrinho;
     struct cliente *prox;
 } Cliente;
@@ -53,6 +54,7 @@ void remover_cliente(Cliente *le, char *cpf);
 int verifica_cpf(char *cpf);
 int cpf_existe(Cliente *le, char *cpf);
 void cria_teste(Cliente *le);
+int verifica_senha(Cliente *c, char *senha);
 
 //Produto
 void cria_produto_teste(Produto *le);
