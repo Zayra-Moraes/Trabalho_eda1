@@ -44,7 +44,7 @@ Cliente *cria_cliente(Cliente *le)
 
   c1->nome = malloc(100 * sizeof(char));
   c1->email = malloc(100 * sizeof(char));
-  c1->senha=malloc(100 * sizeof(char));
+  c1->senha = malloc(100 * sizeof(char));
   if (c1->nome == NULL || c1->email == NULL)
   { // senao alocar certo limpa
     free(c1->nome);
@@ -77,9 +77,9 @@ Cliente *cria_cliente(Cliente *le)
   } while (n_cpf == 0);
   strcpy(c1->cpf, cpf);
   printf("Senha: ");
-  char *senha=malloc(100*sizeof(char));
-  scanf(" %s",senha);
-  strcpy(c1->senha,senha);
+  char *senha = malloc(100 * sizeof(char));
+  scanf(" %s", senha);
+  strcpy(c1->senha, senha);
   free(senha);
   printf("Email:");
   char *email = malloc(100 * (sizeof(char)));
@@ -122,7 +122,7 @@ void cadastrar_cliente(Cliente *le)
     printf("erro ao criar novo cliente\n");
     return;
   }
-  
+
   Cliente *ultimo = acha_ultimo_leCliente(le);
 
   insere_cliente_le(c1, ultimo);
@@ -271,7 +271,8 @@ int verifica_cpf(char *cpf)
   }
   for (int i = 0; i < n; i++)
   {
-    if (!isdigit(cpf[i])){
+    if (!isdigit(cpf[i]))
+    {
       printf("Erro: CPF deve conter apenas numeros.\n");
       return 0;
     }
@@ -281,7 +282,7 @@ int verifica_cpf(char *cpf)
 
 int cpf_existe(Cliente *le, char *cpf)
 {
-  Cliente *p = le->prox; 
+  Cliente *p = le->prox;
   while (p != NULL)
   {
     if (strcmp(p->cpf, cpf) == 0)
@@ -291,19 +292,22 @@ int cpf_existe(Cliente *le, char *cpf)
   return 0; // não existe
 }
 
-int verifica_senha(Cliente *c, char *senha){
-  if(strcmp(c->senha,senha)==0){
-    return 1;//foi igual
+int verifica_senha(Cliente *c, char *senha)
+{
+  if (strcmp(c->senha, senha) == 0)
+  {
+    return 1; // foi igual
   }
-  return 0;//foi diferente
-
+  return 0; // foi diferente
 }
 
-void formatar_data(char data[]){
-  if(strlen(data)!=8) return;
+void formatar_data(char data[])
+{
+  if (strlen(data) != 8)
+    return;
   char nova[11];
-  sprintf(nova,"%.2s/%.2s/%.4s",data,data+2,data+4);
-  strcpy(data,nova);
+  sprintf(nova, "%.2s/%.2s/%.4s", data, data + 2, data + 4);
+  strcpy(data, nova);
 }
 
 // PRODUTO
@@ -342,7 +346,7 @@ Produto *cria_produto()
   }
 
   printf("\n--- Cadastro de Produto ---\n");
-  printf("Código do produto: ");
+  printf("Codigo do produto: ");
   char codigo[13];
   scanf("%s", codigo);
   strcpy(p1->codigo, codigo);
@@ -351,7 +355,7 @@ Produto *cria_produto()
   scanf(" %[^\n]", nome);
   strcpy(p1->nome, nome);
   free(nome);
-  printf("Preço: ");
+  printf("Preco: ");
   scanf("%f", &p1->preco);
   printf("Quantidade em estoque: \n");
   scanf("%d", &p1->quantidade);
@@ -398,6 +402,47 @@ void cadastrar_produto(Produto *le)
     return;
   }
   Produto *ultimo = acha_ultimo_leProduto(le);
+  for (Produto *p = le->prox; p != NULL; p = p->prox)
+  {
+    if (strcmp(p->nome, novo->nome) == 0)
+    {
+      printf("Produto ja cadastrado ");
+      printf("\nCod: %s | Nome: %s  |  Preço: R$%.2f  | Quantidade disp.: %d   | \n", p->codigo, p->nome, p->preco, p->quantidade);
+      int i = 0;
+      while (i == 0)
+      {
+        printf("Deseja juntar/somar os produtos no estoque [S/N]\n");
+        char resposta;
+        scanf(" %c", &resposta);
+        if (resposta == 'S' || resposta == 's')
+        {
+          p->quantidade += novo->quantidade;
+          printf("Produto: %s Atualizado", p->nome);
+          printf("\nCod: %s | Nome: %s  |  Preço: R$%.2f  | Quantidade disp.: %d   | \n", p->codigo, p->nome, p->preco, p->quantidade);
+
+          free(novo);
+          return;
+        }
+        else if (resposta == 'N' || resposta == 'n')
+        {
+          printf("\nCadastrando o Produto novamente\n");
+          insere_produto_le(novo, ultimo);
+          return;
+        }
+        else
+        {
+          printf("Por favor digite uma resposta valida...\n");
+        }
+      }
+    }
+    if (strcmp(p->codigo, novo->codigo) == 0)
+    {
+      printf("Codigo já em uso");
+      free(novo);
+      return;
+    }
+  }
+
   insere_produto_le(novo, ultimo);
   printf("Produto <%s> cadastrado com sucesso!\n", novo->nome);
 }
@@ -417,7 +462,7 @@ void lista_produtos_short(Produto *le)
   printf("\n--- Lista de Produtos ---\n");
   for (Produto *p = le->prox; p != NULL; p = p->prox)
   {
-    printf("\nCod: %s | Nome: %s  |  Preço: R$%.2f  | Quantidade disp.: %d   | \n",p->codigo, p->nome, p->preco, p->quantidade);
+    printf("\nCod: %s | Nome: %s  |  Preço: R$%.2f  | Quantidade disp.: %d   | \n", p->codigo, p->nome, p->preco, p->quantidade);
     /* code */
   }
   printf("\n");
@@ -626,7 +671,7 @@ int adicionar_ao_carrinho(Cliente *c, char *codigo_produto, int qtd_desejada, Pr
 
 void listar_carrinho(Cliente *c)
 {
-  printf("Cliente: %s\n",c->nome);
+  printf("Cliente: %s\n", c->nome);
   printf("\n------------------ Carrinho ------------------\n");
   if (!c || !c->carrinho || c->carrinho->le_produtos->prox == NULL)
   {
@@ -649,17 +694,18 @@ void listar_carrinho(Cliente *c)
       printf("COD: %s | (produto removido do estoque) | Qtd: %d\n", p->codigo, p->quantidade);
     } */
   }
-  printf("\n--- Qtd de itens: %d -- Valor final: R$%.2f---\n",calcula_itens(c->carrinho->le_produtos),calcula_valor(c->carrinho->le_produtos));
+  printf("\n--- Qtd de itens: %d -- Valor final: R$%.2f---\n", calcula_itens(c->carrinho->le_produtos), calcula_valor(c->carrinho->le_produtos));
   /* if (vazio)
   {
     printf("Carrinho vazio.\n");
   } */
 }
 
- void esvaziar_carrinho(Carrinho *c, Produto *le_produtos)
+void esvaziar_carrinho(Carrinho *c, Produto *le_produtos)
 {
 
-  if (!c || !c->le_produtos) return;
+  if (!c || !c->le_produtos)
+    return;
 
   Produto *p = c->le_produtos->prox;
   while (p != NULL)
@@ -670,11 +716,14 @@ void listar_carrinho(Cliente *c)
     p = next;
   }
   c->le_produtos->prox = NULL;
-} 
+}
 
-Produto *busca_item(Produto *le, char *codigo){
-  for(Produto *p=le; p!=NULL;p=p->prox){
-    if(strcmp(p->codigo, codigo)==0){
+Produto *busca_item(Produto *le, char *codigo)
+{
+  for (Produto *p = le; p != NULL; p = p->prox)
+  {
+    if (strcmp(p->codigo, codigo) == 0)
+    {
       printf("COD: %s | Nome: %s | Preco: R$ %.2f | Qtd: %d\n", p->codigo, p->nome, p->preco, p->quantidade);
       return p;
     }
@@ -683,10 +732,12 @@ Produto *busca_item(Produto *le, char *codigo){
   return NULL;
 }
 
-void remove_item(Produto *le_carrinho, Produto *p_quero_remover, int qtd, Produto *le_produtos){
-  if(p_quero_remover->quantidade == 1 || p_quero_remover->quantidade==qtd){
-    Produto*ant=le_carrinho;
-    Produto *atual=le_carrinho->prox;
+void remove_item(Produto *le_carrinho, Produto *p_quero_remover, int qtd, Produto *le_produtos)
+{
+  if (p_quero_remover->quantidade == 1 || p_quero_remover->quantidade == qtd)
+  {
+    Produto *ant = le_carrinho;
+    Produto *atual = le_carrinho->prox;
     while (atual != NULL && strcmp(atual->codigo, p_quero_remover->codigo) != 0)
     {
       ant = atual;
@@ -696,34 +747,33 @@ void remove_item(Produto *le_carrinho, Produto *p_quero_remover, int qtd, Produt
     {
       ant->prox = atual->prox;
       // free_produto(atual);
-      Produto *p_estoque=buscar_produtos(le_produtos,p_quero_remover->codigo);
-      p_estoque->quantidade=p_estoque->quantidade+qtd;
+      Produto *p_estoque = buscar_produtos(le_produtos, p_quero_remover->codigo);
+      p_estoque->quantidade = p_estoque->quantidade + qtd;
       free(atual->nome);
       free(atual);
-      
-      
     }
     else
     {
       printf("Erro: Produto não encontrado.\n");
     }
   }
-  else{
-    p_quero_remover->quantidade=p_quero_remover->quantidade-qtd;
-    Produto *p_estoque=buscar_produtos(le_produtos,p_quero_remover->codigo);
-    p_estoque->quantidade=p_estoque->quantidade+qtd;
+  else
+  {
+    p_quero_remover->quantidade = p_quero_remover->quantidade - qtd;
+    Produto *p_estoque = buscar_produtos(le_produtos, p_quero_remover->codigo);
+    p_estoque->quantidade = p_estoque->quantidade + qtd;
   }
 }
 
 int calcula_itens(Produto *produtos_cliente)
 {
-  int item_final=0;
+  int item_final = 0;
   for (Produto *p = produtos_cliente->prox; p != NULL; p = p->prox)
   {
-    int item=1;
-    int qtd=p->quantidade;
-    item=item*qtd;
-    item_final=item_final+item;
+    int item = 1;
+    int qtd = p->quantidade;
+    item = item * qtd;
+    item_final = item_final + item;
   }
   return item_final;
 }
@@ -733,16 +783,17 @@ float calcula_valor(Produto *produtos_cliente)
   float valor_total = 0, valor = 0;
   for (Produto *p = produtos_cliente->prox; p != NULL; p = p->prox)
   {
-    int qtd=p->quantidade;
+    int qtd = p->quantidade;
     valor = p->preco * qtd;
     valor_total += valor;
   }
   return valor_total;
 }
 
-void comprar(Produto *le_carrinho,Produto *p_quero_remover){
-  Produto*ant=le_carrinho;
-  Produto *atual=le_carrinho->prox;
+void comprar(Produto *le_carrinho, Produto *p_quero_remover)
+{
+  Produto *ant = le_carrinho;
+  Produto *atual = le_carrinho->prox;
   while (atual != NULL && strcmp(atual->codigo, p_quero_remover->codigo) != 0)
   {
     ant = atual;
@@ -754,8 +805,6 @@ void comprar(Produto *le_carrinho,Produto *p_quero_remover){
     // free_produto(atual);
     free(atual->nome);
     free(atual);
-    
-    
   }
   else
   {
@@ -763,15 +812,16 @@ void comprar(Produto *le_carrinho,Produto *p_quero_remover){
   }
 }
 
-
-void finalizar(Carrinho *c, Produto *le_produtos){
-  if (!c || !c->le_produtos) return;
+void finalizar(Carrinho *c, Produto *le_produtos)
+{
+  if (!c || !c->le_produtos)
+    return;
 
   Produto *p = c->le_produtos->prox;
   while (p != NULL)
   {
     Produto *next = p->prox;
-    comprar(c->le_produtos,p);
+    comprar(c->le_produtos, p);
     p = next;
   }
 }
@@ -801,7 +851,7 @@ void cria_produto_teste(Produto *le)
   p1->quantidade = 10;
   Produto *ultimo1 = acha_ultimo_leProduto(le);
   insere_produto_le(p1, ultimo1);
-//------------------
+  //------------------
   Produto *p2 = malloc(sizeof(Produto));
   if (p2 == NULL)
   {
@@ -823,7 +873,7 @@ void cria_produto_teste(Produto *le)
   p2->quantidade = 10;
   Produto *ultimo2 = acha_ultimo_leProduto(le);
   insere_produto_le(p2, ultimo2);
-//----------------------
+  //----------------------
   Produto *p3 = malloc(sizeof(Produto));
   if (p3 == NULL)
   {
@@ -846,7 +896,7 @@ void cria_produto_teste(Produto *le)
   Produto *ultimo3 = acha_ultimo_leProduto(le);
   insere_produto_le(p3, ultimo3);
   //-----------
-    Produto *p4 = malloc(sizeof(Produto));
+  Produto *p4 = malloc(sizeof(Produto));
   if (p4 == NULL)
   {
     free(p4);
@@ -868,7 +918,7 @@ void cria_produto_teste(Produto *le)
   Produto *ultimo4 = acha_ultimo_leProduto(le);
   insere_produto_le(p4, ultimo4);
   //-----------
-    Produto *p5 = malloc(sizeof(Produto));
+  Produto *p5 = malloc(sizeof(Produto));
   if (p5 == NULL)
   {
     free(p5);
@@ -902,7 +952,7 @@ void cria_cliente_teste(Cliente *le)
 
   c1->nome = malloc(100 * sizeof(char));
   c1->email = malloc(100 * sizeof(char));
-  c1->senha=malloc(100*sizeof(char));
+  c1->senha = malloc(100 * sizeof(char));
   if (c1->nome == NULL || c1->email == NULL)
   { // senao alocar certo limpa
     free(c1->nome);
@@ -935,7 +985,7 @@ void cria_cliente_teste(Cliente *le)
 
   c2->nome = malloc(100 * sizeof(char));
   c2->email = malloc(100 * sizeof(char));
-  c2->senha=malloc(100*sizeof(char));
+  c2->senha = malloc(100 * sizeof(char));
   if (c2->nome == NULL || c2->email == NULL)
   { // senao alocar certo limpa
     free(c2->nome);
@@ -967,7 +1017,7 @@ void cria_cliente_teste(Cliente *le)
 
   c3->nome = malloc(100 * sizeof(char));
   c3->email = malloc(100 * sizeof(char));
-  c3->senha=malloc(100*sizeof(char));
+  c3->senha = malloc(100 * sizeof(char));
   if (c3->nome == NULL || c3->email == NULL)
   { // senao alocar certo limpa
     free(c3->nome);
