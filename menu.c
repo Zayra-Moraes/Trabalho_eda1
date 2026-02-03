@@ -6,7 +6,6 @@
 #include <string.h>
 // #include <windows.h>
 
-
 int menuCompra(Cliente *cliente, Produto *le_produtos)
 {
 
@@ -25,8 +24,8 @@ int menuCompra(Cliente *cliente, Produto *le_produtos)
     printf("4 - Esvaziar Carrinho\n");
     printf("5 - Finalizar Compra\n");
     printf("0 - Sair\n");
-    printf("\nPor favor digite um numero:\n");
     printf("--------------------------------------------\n");
+    printf("\nPor favor digite um numero: ");
     if (scanf("%d", &entrada) != 1)
     {
       printf("entrada invalida\n");
@@ -59,53 +58,69 @@ int menuCompra(Cliente *cliente, Produto *le_produtos)
     case 3:
       printf("Remover produto do carrinho\n\n");
       printf("Por favor digite o codigo do produto que deseja remover: ");
-      char *codigo=malloc(13*sizeof(char));
+      char *codigo = malloc(13 * sizeof(char));
       scanf("%s", codigo);
       Produto *p = busca_item(cliente->carrinho->le_produtos, codigo);
       free(codigo);
-      if(p!=NULL){
-        if(p->quantidade == 1) remove_item(cliente->carrinho->le_produtos, p,1,le_produtos);
-        else{
+      if (p != NULL)
+      {
+        if (p->quantidade == 1)
+          remove_item(cliente->carrinho->le_produtos, p, 1, le_produtos);
+          printf("Produto removido com sucesso!");
+        else
+        {
           int q;
           printf("Digite a quantidade qque deseja remover: ");
-          scanf("%d",&q);
-          remove_item(cliente->carrinho->le_produtos, p,q,le_produtos);
+          scanf("%d", &q);
+          remove_item(cliente->carrinho->le_produtos, p, q, le_produtos);
+          printf("Produto removido com sucesso!");
         }
       }
-      else{printf("Produto nao encontrado");}
+      else
+      {
+        printf("Produto nao encontrado");
+      }
       break;
     case 4:
       printf("Esvaziar Carrinho\n\n");
-      if (!cliente || !cliente->carrinho || cliente->carrinho->le_produtos->prox == NULL) {
+      if (!cliente || !cliente->carrinho || cliente->carrinho->le_produtos->prox == NULL)
+      {
         printf("Carrinho já está vazio.\n");
-      } 
-      else {
+      }
+      else
+      {
         esvaziar_carrinho(cliente->carrinho, le_produtos);
         printf("Carrinho esvaziado com sucesso.\n");
       }
       break;
-    
+
     case 5:
       printf("finalizar compra\n\n");
-      float valor=calcula_valor(cliente->carrinho->le_produtos);
-      printf("->Resultado final do carrinho: R$%.2f com %d itens.",valor,calcula_itens(cliente->carrinho->le_produtos));
-      int i=0;
-      while(i==0){
-        printf("\nTem certeza que deseja finalizar a compora? (Y/N) ");
+      float valor = calcula_valor(cliente->carrinho->le_produtos);
+      printf("->Resultado final do carrinho: R$%.2f com %d itens.", valor, calcula_itens(cliente->carrinho->le_produtos));
+      int i = 0;
+      while (i == 0)
+      {
+        printf("\nTem certeza que deseja finalizar a compra? (S/N) ");
         char resposta;
-        scanf(" %c",&resposta);
-        if(resposta == 'Y' || resposta == 'y'){
+        scanf(" %c", &resposta);
+        if (resposta == 'S' || resposta == 's')
+        {
           printf("Sua compra foi finalizada! Volte sempre!");
-          i=1;
+          i = 1;
           finalizar(cliente->carrinho, le_produtos);
         }
-        else if(resposta == 'N' || resposta == 'n'){
+        else if (resposta == 'N' || resposta == 'n')
+        {
           printf("Compra cancelada! Seu carrinho ainda está salvo se quiser tentar de novo depois!");
-          i=1;
+          i = 1;
         }
-        else{ printf("Por favor digite uma resposta valida...");}
+        else
+        {
+          printf("Por favor digite uma resposta valida...");
+        }
       }
-      
+
       break;
     case 0:
       printf("saindo...\n\n");
@@ -121,7 +136,7 @@ int menuCompra(Cliente *cliente, Produto *le_produtos)
 
 int menuProdutos(Produto *le_produto)
 {
-  //cria_produto_teste(le_produto);
+  // cria_produto_teste(le_produto);
   int entrada = -1;
 
   while (entrada != 0)
@@ -134,8 +149,8 @@ int menuProdutos(Produto *le_produto)
     printf("4 - Editar dados de um produto\n");
     printf("5 - Remover produto\n");
     printf("0 - Para voltar\n");
-    printf("\nPor favor digite um numero:\n");
     printf("--------------------------------------------\n");
+    printf("\nPor favor digite um numero: ");
     if (scanf("%d", &entrada) != 1)
     {
       printf("entrada invalida\n");
@@ -156,7 +171,8 @@ int menuProdutos(Produto *le_produto)
       printf("listar todos os produtos...\n\n");
       listar_produtos(le_produto); // funcinal
       break;
-    case 3:{
+    case 3:
+    {
       char *entradaFind = malloc(13 * sizeof(char));
       if (entradaFind == NULL)
       {
@@ -175,7 +191,7 @@ int menuProdutos(Produto *le_produto)
         printf("COD: %s\n", p1->codigo);
         printf("NOME: %s\n", p1->nome);
         printf("PREÇO: %.02f\n", p1->preco);
-        printf("QUANTIDADE EM ESTOQUE: %d\n", p1->quantidade);
+        printf("QUANTIDADE: %d\n", p1->quantidade);
         printf("--------------------------------\n");
         break;
       }
@@ -188,7 +204,7 @@ int menuProdutos(Produto *le_produto)
       char *entradaEdit = malloc(13 * sizeof(char));
       if (entradaEdit == NULL)
       {
-        printf("erro na inicialização de ponteiro");
+        printf("erro na inicializacao de ponteiro");
       }
       listar_produtos(le_produto);
       printf("Digite o codigo do produto que deseja editar: ");
@@ -239,7 +255,7 @@ int menuCliente(Cliente *le)
     printf("5 - Remover Cliente\n");
     printf("0 - Para voltar\n");
     printf("--------------------------------------------\n");
-    printf("\nPor favor digite um numero:\n");
+    printf("\nPor favor digite um numero: ");
 
     if (scanf("%d", &entrada) != 1)
     { // se ele nao conseguir ler um int o scanf vai retornar 0
@@ -301,16 +317,52 @@ int menuCliente(Cliente *le)
     case 5:
       printf("remover cliente...\n\n");
       printf("Por favor digite o cpf do cliente que deseja remover: ");
-      scanf("%s", cpf_digitado);
-      remover_cliente(le, cpf_digitado);
-      break;
-    case 0:
-      printf("saindo...\n\n");
-      return 0;
-    default:
-      printf("opcao invalida\n");
-      break;
+      char *cpf_digitado2 = malloc(12 * sizeof(char));
+      scanf("%s", cpf_digitado2);
+      Cliente *c2 = buscar_cliente(le, cpf_digitado2);
+      if (c2)
+      {
+        printf("Cliente encontrado!\n");
+        printf("--------------------------------\n");
+        printf("Nome: %s\n", c2->nome);
+        printf("CPF: %s\n", c2->cpf);
+        printf("Email: %s\n", c2->email);
+        printf("Telefone: %s\n", c2->telefone);
+        printf("nascimento: %s\n", c2->nascimento);
+        printf("--------------------------------\n");
+        
+        int i = 0;
+        while (i == 0)
+        {
+          printf("Deseja reamente remover? (S/N) ");
+          char resposta;
+          scanf(" %c", &resposta);
+          if (resposta == 'S' || resposta == 's')
+          {
+            i = 1;
+            remover_cliente(le, cpf_digitado2);
+          }
+          else if (resposta == 'N' || resposta == 'n')
+          {
+            printf("Remocao cancelada!\n");
+            i = 1;
+          }
+          else
+          {
+            printf("Por favor digite uma resposta valida...");
+          }
+        }
+        free(cpf_digitado2);
+        break;
+      case 0:
+        printf("saindo...\n\n");
+        return 0;
+      default:
+        printf("opcao invalida\n");
+        break;
+      }
     }
+
   }
   return 0;
 }
@@ -321,21 +373,21 @@ int menuPrincipal()
   Produto *le_produto = cria_le_produto();
   // Carrinho *le_carrinho = cria_le_carrinho();
   cria_cliente_teste(le_cliente);
-  //cria_produto_teste(le_produto);
+  cria_produto_teste(le_produto);
 
   int entrada = -1;
 
   while (entrada != 0)
   {
 
-    printf("\n              BEM VINDO A obelisco           \n");
+    printf("\n              BEM VINDO AO OBELISCO           \n");
     printf("----------------Menu Principal----------------\n");
     printf("1 - Gerenciamento de Clientes\n");
     printf("2 - Gerenciamento de Produtos\n");
     printf("3 - Modo Compra\n");
     printf("0 - Para sair\n");
     printf("------------------------------------------------\n");
-    printf("\nPor favor digite um numero:\n");
+    printf("\nPor favor digite um numero: ");
 
     if (scanf("%d", &entrada) != 1)
     {
@@ -358,7 +410,8 @@ int menuPrincipal()
       printf("Entrando no Menu de Produtos...\n\n");
       menuProdutos(le_produto);
       break;
-    case 3:{
+    case 3:
+    {
       char *EntradaCPF = malloc(13 * sizeof(char));
       printf("\nEntrando no Modo Compra...\n\n");
       printf("por favor entre com seu CPF\n");

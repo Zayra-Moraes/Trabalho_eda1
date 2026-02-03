@@ -24,7 +24,6 @@ Cliente *cria_le_cliente()
 }
 Produto *cria_le_produto()
 {
-  printf("criei lista produtos\n");
   Produto *le;
   le = malloc(sizeof(Produto));
   le->prox = NULL;
@@ -185,12 +184,12 @@ void editar_cliente(Cliente *le, char *cpf)
   while (opcao != 0)
   {
     printf("\n--- Editando Cliente ---\n");
-    printf("1 - Editar Nome\n");
+    printf("1- Editar Nome\n");
     printf("2- Editar email\n");
     printf("3- Ediatr Telefone\n");
     printf("4- Editar Nascimento\n");
-    printf("0- Finalizar Edição\n");
-    printf("EScolha uma opção: ");
+    printf("0- Finalizar Edicao\n");
+    printf("Escolha uma opcao: ");
     scanf("%d", &opcao);
     while (getchar() != '\n')
       ;
@@ -247,7 +246,7 @@ void remover_cliente(Cliente *le, char *cpf)
   }
   else
   {
-    printf("Cliente não encontrado.\n");
+    printf("Cliente nao encontrado.\n");
   }
 }
 
@@ -258,13 +257,13 @@ int verifica_cpf(char *cpf)
   // printf("%d\n", n);
   if (n > 11)
   {
-    printf("CPF inválido, por favor inserir novamente: ");
+    printf("CPF invalido, por favor inserir novamente: ");
     return 0; // erro
   }
   for (int i = 0; i < n; i++)
   {
     if (!isdigit(cpf[i])){
-      printf("Erro: CPF deve conter apenas números.\n");
+      printf("Erro: CPF deve conter apenas numeros.\n");
       return 0;
     }
   }
@@ -291,7 +290,7 @@ void listar_produtos_carrinho_short(Produto *le)
   printf("\n--- Lista de Produtos --- \n");
   for (p = le->prox; p != NULL; p = p->prox)
   {
-    printf("Nome: %s   | Preço: %.2f   | Quantidade disp.: %d\n ----------------\n", p->nome, p->preco, p->quantidade);
+    printf("Nome: %s   | Preco: %.2f   | Quantidade disp.: %d\n ----------------\n", p->nome, p->preco, p->quantidade);
   }
 }
 
@@ -331,7 +330,7 @@ Produto *cria_produto()
   free(nome);
   printf("Preço: ");
   scanf("%f", &p1->preco);
-  printf("Quantidade em estoque: ");
+  printf("Quantidade em estoque: \n");
   scanf("%d", &p1->quantidade);
   p1->prox = NULL;
 
@@ -377,7 +376,7 @@ void cadastrar_produto(Produto *le)
   }
   Produto *ultimo = acha_ultimo_leProduto(le);
   insere_produto_le(novo, ultimo);
-  printf("Produto [%s] cadastrado com sucesso!\n", novo->nome);
+  printf("Produto <%s> cadastrado com sucesso!\n", novo->nome);
 }
 
 void free_produto(Produto *p)
@@ -407,13 +406,14 @@ void listar_produtos(Produto *le)
   printf("\n--- Lista de Produtos ---\n");
   for (p = le->prox; p != NULL; p = p->prox)
   {
-    printf("Código: %s   \nNome: %-20s\n", p->codigo, p->nome);
-    printf("Preço: R$ %.2f   \nQuantidade: %d\n\n", p->preco, p->quantidade);
+    printf("COD: %s   \nNOME: %-20s\n", p->codigo, p->nome);
+    printf("PRECO: R$ %.2f   \nQUANTIDADE: %d\n\n", p->preco, p->quantidade);
   }
 }
 
 Produto *buscar_produtos(Produto *lista, char *codigo)
 {
+
   if (lista == NULL)
     return NULL;
   if (strcmp(lista->codigo, codigo) == 0)
@@ -436,10 +436,10 @@ void editar_produtos(Produto *le, char *codigo)
   {
     printf("\n--- Editando Produto ---\n");
     printf("1 - Editar Nome\n");
-    printf("2 - Editar Preço\n");
+    printf("2 - Editar Preco\n");
     printf("3 - Editar Quantidade\n");
-    printf("0 - Finalizar Edição\n");
-    printf("Escolha uma opção: ");
+    printf("0 - Finalizar Edicao\n");
+    printf("Escolha uma opcao: ");
     scanf("%d", &opcao);
     while (getchar() != '\n')
       ;
@@ -527,7 +527,6 @@ Cliente *login(char *cpf, Cliente *le)
 Carrinho *cria_item_carrinho(const char *codigo)
 {
 
-  printf("criando meu carrinho\n");
   Carrinho *it = malloc(sizeof(Carrinho));
   if (!it)
     return NULL;
@@ -677,7 +676,6 @@ void remove_item(Produto *le_carrinho, Produto *p_quero_remover, int qtd, Produt
       p_estoque->quantidade=p_estoque->quantidade+qtd;
       free(atual->nome);
       free(atual);
-      printf("Produto removido com sucesso!\n");
       
       
     }
@@ -732,7 +730,6 @@ void comprar(Produto *le_carrinho,Produto *p_quero_remover){
     // free_produto(atual);
     free(atual->nome);
     free(atual);
-    printf("Produto removido com sucesso!\n");
     
     
   }
@@ -773,14 +770,101 @@ void cria_produto_teste(Produto *le)
     return;
     /* code */
   }
-  strcpy(p1->codigo, "codigoTeste");
-  strcpy(p1->nome, "roupa teste");
-  p1->preco = 4.50;
+  strcpy(p1->codigo, "0002");
+  strcpy(p1->nome, "Pingado");
+  p1->preco = 2.50;
   p1->prox = NULL;
   p1->quantidade = 10;
-  Produto *ultimo = acha_ultimo_leProduto(le);
-  insere_produto_le(p1, ultimo);
-  printf("Produto teste cadastrado\n");
+  Produto *ultimo1 = acha_ultimo_leProduto(le);
+  insere_produto_le(p1, ultimo1);
+//------------------
+  Produto *p2 = malloc(sizeof(Produto));
+  if (p2 == NULL)
+  {
+    free(p2);
+    return;
+  }
+
+  p2->nome = malloc(50 * sizeof(char));
+  if (p2->nome == NULL)
+  {
+    free(p2->nome);
+    return;
+    /* code */
+  }
+  strcpy(p2->codigo, "0004");
+  strcpy(p2->nome, "Pao de queijo");
+  p2->preco = 3.50;
+  p2->prox = NULL;
+  p2->quantidade = 10;
+  Produto *ultimo2 = acha_ultimo_leProduto(le);
+  insere_produto_le(p2, ultimo2);
+//----------------------
+  Produto *p3 = malloc(sizeof(Produto));
+  if (p3 == NULL)
+  {
+    free(p3);
+    return;
+  }
+
+  p3->nome = malloc(50 * sizeof(char));
+  if (p3->nome == NULL)
+  {
+    free(p3->nome);
+    return;
+    /* code */
+  }
+  strcpy(p3->codigo, "0005");
+  strcpy(p3->nome, "salgado");
+  p3->preco = 7.0;
+  p3->prox = NULL;
+  p3->quantidade = 10;
+  Produto *ultimo3 = acha_ultimo_leProduto(le);
+  insere_produto_le(p3, ultimo3);
+  //-----------
+    Produto *p4 = malloc(sizeof(Produto));
+  if (p4 == NULL)
+  {
+    free(p4);
+    return;
+  }
+
+  p4->nome = malloc(50 * sizeof(char));
+  if (p4->nome == NULL)
+  {
+    free(p4->nome);
+    return;
+    /* code */
+  }
+  strcpy(p4->codigo, "0006");
+  strcpy(p4->nome, "coca-cola");
+  p4->preco = 6.0;
+  p4->prox = NULL;
+  p4->quantidade = 20;
+  Produto *ultimo4 = acha_ultimo_leProduto(le);
+  insere_produto_le(p4, ultimo4);
+  //-----------
+    Produto *p5 = malloc(sizeof(Produto));
+  if (p5 == NULL)
+  {
+    free(p5);
+    return;
+  }
+
+  p5->nome = malloc(50 * sizeof(char));
+  if (p5->nome == NULL)
+  {
+    free(p5->nome);
+    return;
+    /* code */
+  }
+  strcpy(p5->codigo, "0007");
+  strcpy(p5->nome, "bolo de cenoura");
+  p5->preco = 2.5;
+  p5->prox = NULL;
+  p5->quantidade = 6;
+  Produto *ultimo5 = acha_ultimo_leProduto(le);
+  insere_produto_le(p5, ultimo5);
 }
 
 void cria_cliente_teste(Cliente *le)
@@ -802,7 +886,7 @@ void cria_cliente_teste(Cliente *le)
     return;
   }
 
-  strcpy(c1->nome, "Zayra gostosa"); // acesso por ponteiro
+  strcpy(c1->nome, "Zayra"); // acesso por ponteiro
   strcpy(c1->cpf, "12345");
   strcpy(c1->email, "email.teste");
   strcpy(c1->telefone, "telefone");
@@ -832,7 +916,7 @@ void cria_cliente_teste(Cliente *le)
   }
   // acesso por ponteiro
 
-  strcpy(c2->nome, "gabriel");
+  strcpy(c2->nome, "Gabriel");
   strcpy(c2->cpf, "1234");
   strcpy(c2->email, "email.teste");
   strcpy(c2->telefone, "telefone");
