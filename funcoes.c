@@ -16,9 +16,13 @@ Cliente *cria_le_cliente()
 }
 Produto *cria_le_produto()
 {
-  Produto *le;
-  le = malloc(sizeof(Produto));
+  Produto *le = malloc(sizeof(Produto));
+  if (!le) return NULL;
   le->prox = NULL;
+  le->nome = NULL;       // sem nome no head
+  le->codigo[0] = '\0';  // codigo vazio
+  le->preco = 0.0;
+  le->quantidade = 0;
   return le;
 }
 
@@ -473,12 +477,18 @@ void listar_produtos(Produto *le)
 
 Produto *buscar_produtos(Produto *lista, char *termo)
 {
-  if (lista == NULL)
+  if (lista == NULL || termo == NULL || termo[0] == '\0')
     return NULL;
-  if (strcmp(lista->codigo, termo) == 0 || strstr(lista->nome, termo) != NULL)
+
+  if (lista->codigo[0] != '\0' && strcmp(lista->codigo, termo) == 0)
     return lista;
+
+  if (lista->nome != NULL && lista->nome[0] != '\0' && strstr(lista->nome, termo) != NULL)
+    return lista;
+
   return buscar_produtos(lista->prox, termo);
 }
+
 void editar_produtos(Produto *le, char *codigo)
 {
   Produto *p = buscar_produtos(le->prox, codigo);
