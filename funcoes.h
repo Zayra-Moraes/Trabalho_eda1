@@ -84,4 +84,7 @@ int calcula_itens(Produto *produtos_cliente);
 void comprar(Produto *le_carrinho,Produto *p_quero_remover);
 void finalizar(Carrinho *c, Produto *le_produtos);
 
+//sistema
+void setColor(int cor);
+
 #endif

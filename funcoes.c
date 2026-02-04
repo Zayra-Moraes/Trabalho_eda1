@@ -4,6 +4,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
+#include <windows.h>
 
 // LISTAS
 
@@ -147,11 +148,11 @@ void listar_clientes(Cliente *le)
   for (p = le->prox; p != NULL; p = p->prox)
   {
     printf("\n-----------------------------\n");
-    printf("Nome:%s\n", p->nome);
-    printf("Email:%s\n", p->email);
+    printf("NOME:%s\n", p->nome);
+    printf("EMAIL:%s\n", p->email);
     printf("CPF:%s\n", p->cpf);
-    printf("Numero:%s\n", p->telefone);
-    printf("Data de nascimento:%s\n", p->nascimento);
+    printf("NUMERO:%s\n", p->telefone);
+    printf("DATA DE NASCIMENTO:%s\n", p->nascimento);
     // printf("Senha: %s\n", p->senha);
   }
   printf("-----------------------------\n\n");
@@ -182,7 +183,7 @@ void editar_cliente(Cliente *le, char *cpf)
   }
   if (p == NULL)
   {
-    printf("Cliente com CPF não encontrado. \n");
+    printf("Cliente com CPF nao encontrado. \n");
     return;
   }
   int opcao = -1;
@@ -220,10 +221,10 @@ void editar_cliente(Cliente *le, char *cpf)
       scanf("%s", p->nascimento);
       break;
     case 0:
-      printf("Edição Finalizada.\n ");
+      printf("Edicao Finalizada.\n ");
       break;
     default:
-      printf("Opção invalida!");
+      printf("Opcao invalida!");
     }
   }
 }
@@ -353,7 +354,7 @@ Produto *cria_produto()
   free(nome);
   printf("Preco: ");
   scanf("%f", &p1->preco);
-  printf("Quantidade em estoque: \n");
+  printf("Quantidade em estoque: ");
   scanf("%d", &p1->quantidade);
   p1->prox = NULL;
 
@@ -403,7 +404,7 @@ void cadastrar_produto(Produto *le)
     if (strcmp(p->nome, novo->nome) == 0)
     {
       printf("Produto ja cadastrado ");
-      printf("\nCod: %s | Nome: %s  |  Preço: R$%.2f  | Quantidade disp.: %d   | \n", p->codigo, p->nome, p->preco, p->quantidade);
+      printf("\nCod: %s | Nome: %s  |  Preco: R$%.2f  | Quantidade disp.: %d   | \n", p->codigo, p->nome, p->preco, p->quantidade);
       int i = 0;
       while (i == 0)
       {
@@ -414,7 +415,7 @@ void cadastrar_produto(Produto *le)
         {
           p->quantidade += novo->quantidade;
           printf("Produto: %s Atualizado", p->nome);
-          printf("\nCod: %s | Nome: %s  |  Preço: R$%.2f  | Quantidade disp.: %d   | \n", p->codigo, p->nome, p->preco, p->quantidade);
+          printf("\nCod: %s | Nome: %s  |  Preco: R$%.2f  | Quantidade disp.: %d   | \n", p->codigo, p->nome, p->preco, p->quantidade);
 
           free(novo);
           return;
@@ -433,7 +434,7 @@ void cadastrar_produto(Produto *le)
     }
     if (strcmp(p->codigo, novo->codigo) == 0)
     {
-      printf("Codigo já em uso");
+      printf("Codigo ja em uso");
       free(novo);
       return;
     }
@@ -458,7 +459,7 @@ void lista_produtos_short(Produto *le)
   printf("\n--- Lista de Produtos ---\n");
   for (Produto *p = le->prox; p != NULL; p = p->prox)
   {
-    printf("\nCod: %s | Nome: %s  |  Preço: R$%.2f  | Quantidade disp.: %d   | \n", p->codigo, p->nome, p->preco, p->quantidade);
+    printf("\nCod: %s | Nome: %s  |  Preco: R$%.2f  | Quantidade disp.: %d   | \n", p->codigo, p->nome, p->preco, p->quantidade);
     /* code */
   }
   printf("\n");
@@ -495,7 +496,7 @@ void editar_produtos(Produto *le, char *codigo)
 
   if (p == NULL)
   {
-    printf("Produto não encontrado.\n");
+    printf("Produto nao encontrado.\n");
     return;
   }
 
@@ -520,12 +521,12 @@ void editar_produtos(Produto *le, char *codigo)
       scanf(" %[^\n]", p->nome);
       while (getchar() != '\n')
       {
-        printf("entrei aq");
+        // printf("entrei aq");
       }
-      printf("cheguei aqui2 ");
+      // printf("cheguei aqui2 ");
       break;
     case 2:
-      printf("Novo Preço: ");
+      printf("Novo Preco: ");
       scanf("%f", &p->preco);
       break;
     case 3:
@@ -535,7 +536,7 @@ void editar_produtos(Produto *le, char *codigo)
     case 0:
       break;
     default:
-      printf("Opção inválida!\n");
+      printf("Opcao invalida!\n");
     }
   }
 }
@@ -561,7 +562,7 @@ void remover_produtos(Produto *lista, char *codigo)
   }
   else
   {
-    printf("Erro: Produto não encontrado.\n");
+    printf("Erro: Produto nao encontrado.\n");
   }
 }
 
@@ -603,17 +604,17 @@ int adicionar_ao_carrinho(Cliente *c, char *codigo_produto, int qtd_desejada, Pr
   Produto *p = buscar_produtos(le_produto, codigo_produto); // na lista estoque
   if (!p)
   {
-    printf("Produto não existe.\n");
+    printf("Produto nao existe.\n");
     return 0;
   }
   if (qtd_desejada <= 0)
   {
-    printf("Qauntidade inválida.\n");
+    printf("Quantidade invalida.\n");
     return 0;
   }
   if (qtd_desejada > p->quantidade)
   {
-    printf("Apenas %d unidades disponíveis em estoque.\n", p->quantidade);
+    printf("Apenas %d unidades disponiveis em estoque.\n", p->quantidade);
     return 0;
   }
   if (qtd_desejada <= p->quantidade)
@@ -649,7 +650,10 @@ int adicionar_ao_carrinho(Cliente *c, char *codigo_produto, int qtd_desejada, Pr
 
 void listar_carrinho(Cliente *c)
 {
-  printf("Cliente: %s\n", c->nome);
+  printf("Cliente: ");
+  setColor(0x74); 
+  printf("%s\n",c->nome);
+  setColor(0x70); 
   printf("\n------------------ Carrinho ------------------\n");
   if (!c || !c->carrinho || c->carrinho->le_produtos->prox == NULL)
   {
@@ -665,7 +669,7 @@ void listar_carrinho(Cliente *c)
     // Produto *p = buscar_produtos(le_produto, it->codigo);
     // if (p)
     //{
-    printf("COD: %s | Nome: %s | Preço: R$ %.2f | Qtd: %d\n", p->codigo, p->nome, p->preco, p->quantidade);
+    printf("COD: %s | Nome: %s | Preco: R$ %.2f | Qtd: %d\n", p->codigo, p->nome, p->preco, p->quantidade);
     //}
     /* else// nunca vai cair aqui pq ja verifica la em cima ne
     {
@@ -732,7 +736,7 @@ void remove_item(Produto *le_carrinho, Produto *p_quero_remover, int qtd, Produt
     }
     else
     {
-      printf("Erro: Produto não encontrado.\n");
+      printf("Erro: Produto nao encontrado.\n");
     }
   }
   else
@@ -786,7 +790,7 @@ void comprar(Produto *le_carrinho, Produto *p_quero_remover)
   }
   else
   {
-    printf("Erro: Produto não encontrado.\n");
+    printf("Erro: Produto nao encontrado.\n");
   }
 }
 
@@ -1017,3 +1021,11 @@ void cria_cliente_teste(Cliente *le)
   Cliente *ultimo_3 = acha_ultimo_leCliente(le);
   insere_cliente_le(c3, ultimo_3);
 }
+
+//Sistema
+
+void setColor(int cor)
+{
+    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), cor);
+}
+

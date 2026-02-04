@@ -87,7 +87,7 @@ int menuCompra(Cliente *cliente, Produto *le_produtos)
       printf("Esvaziar Carrinho\n\n");
       if (!cliente || !cliente->carrinho || cliente->carrinho->le_produtos->prox == NULL)
       {
-        printf("Carrinho já está vazio.\n");
+        printf("Carrinho ja esta vazio.\n");
       }
       else
       {
@@ -190,7 +190,7 @@ int menuProdutos(Produto *le_produto)
       char *entradaFind = malloc(13 * sizeof(char));
       if (entradaFind == NULL)
       {
-        printf("erro na inicialização de ponteiro");
+        printf("erro na inicializacao de ponteiro");
       }
 
       printf("buscar produto...\n\n");
@@ -204,7 +204,7 @@ int menuProdutos(Produto *le_produto)
         printf("--------------------------------\n");
         printf("COD: %s\n", p1->codigo);
         printf("NOME: %s\n", p1->nome);
-        printf("PREÇO: %.02f\n", p1->preco);
+        printf("PRECO: %.02f\n", p1->preco);
         printf("QUANTIDADE: %d\n", p1->quantidade);
         printf("--------------------------------\n");
         break;
@@ -391,13 +391,16 @@ int menuPrincipal()
   // Carrinho *le_carrinho = cria_le_carrinho();
   cria_cliente_teste(le_cliente);
   cria_produto_teste(le_produto);
-
+  system("color 70");
   int entrada = -1;
 
   while (entrada != 0)
   {
     system("cls");
-    printf("\n              BEM VINDO AO OBELISCO           \n");
+    setColor(0x74); 
+    printf("\n            BEM VINDO AO OBELISCO           \n");
+    
+    setColor(0x70); 
     printf("----------------Menu Principal----------------\n");
     printf("1 - Gerenciamento de Clientes\n");
     printf("2 - Gerenciamento de Produtos\n");
