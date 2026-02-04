@@ -6,15 +6,7 @@
 #include <ctype.h>
 
 // LISTAS
-/* Carrinho *cria_le_carrinho()
-{
-  Carrinho *le;
-  le = malloc(sizeof(Carrinho));
-  le->prox = NULL;
-  le->codigo[0] = '\0';
-  le->qtd = 0;
-  return le;
-} */
+
 Cliente *cria_le_cliente()
 {
   Cliente *le;
@@ -576,19 +568,6 @@ Cliente *login(char *cpf, Cliente *le)
   return NULL;
 }
 
-/* Carrinho *acha_ultimo_leCarrinho(Carrinho *le)
-{
-  if (!le)
-  {
-    return NULL;
-  }
-  Carrinho *p = le;
-  while (p->prox != NULL)
-  {
-    p = p->prox;
-  }
-  return p;
-} */
 
 Carrinho *cria_item_carrinho(const char *codigo)
 {
@@ -603,15 +582,6 @@ Carrinho *cria_item_carrinho(const char *codigo)
   return it;
 }
 
-/* void insere_item_carrinho(Carrinho *item, Carrinho *le)
-{
-  if (!item || !le)
-  {
-    return;
-  }
-  Carrinho *ultimo = acha_ultimo_leCarrinho(le);
-  ultimo->prox = item;
-} */
 
 int adicionar_ao_carrinho(Cliente *c, char *codigo_produto, int qtd_desejada, Produto *le_produto)
 {
